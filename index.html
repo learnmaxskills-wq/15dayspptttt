@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agentic AI — The Future is Now</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --neon-blue: #00d4ff;
+      --neon-purple: #bf00ff;
+      --neon-green: #00ff88;
+      --neon-pink: #ff006e;
+      --neon-orange: #ff6b00;
+      --dark-bg: #020408;
+      --card-bg: rgba(255,255,255,0.03);
+      --glass: rgba(255,255,255,0.06);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--dark-bg);
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* ─── CANVAS PARTICLES ─────────────────────── */
+    #bgCanvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ─── SLIDE SYSTEM ─────────────────────────── */
+    .slideshow {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(60px) scale(0.97);
+      transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0) scale(1);
+    }
+
+    .slide.exit {
+      opacity: 0;
+      transform: translateY(-60px) scale(0.97);
+    }
+
+    /* ─── NAV ─────────────────────────────────── */
+    .nav {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      z-index: 100;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 60px;
+      padding: 12px 24px;
+    }
+
+    .nav-btn {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s;
+    }
+    .nav-btn:hover {
+      background: var(--neon-blue);
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 20px var(--neon-blue);
+    }
+
+    .slide-counter {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      min-width: 60px;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+
+    .dot-nav {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .dot.active {
+      background: var(--neon-blue);
+      box-shadow: 0 0 10px var(--neon-blue);
+      width: 24px;
+      border-radius: 4px;
+    }
+
+    /* ─── SLIDE 1: TITLE ──────────────────────── */
+    .s1-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(36px, 7vw, 96px);
+      font-weight: 900;
+      text-align: center;
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple), var(--neon-pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+      text-shadow: none;
+      filter: drop-shadow(0 0 40px rgba(0,212,255,0.4));
+      animation: titlePulse 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes titlePulse {
+      from { filter: drop-shadow(0 0 20px rgba(0,212,255,0.3)); }
+      to   { filter: drop-shadow(0 0 60px rgba(191,0,255,0.6)); }
+    }
+
+    .s1-sub {
+      font-size: clamp(14px, 2vw, 22px);
+      color: rgba(255,255,255,0.5);
+      margin-top: 20px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+
+    .badge-row {
+      display: flex;
+      gap: 16px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .badge {
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      border: 1.5px solid;
+      animation: badgeFloat 3s ease-in-out infinite;
+    }
+
+    .badge:nth-child(1) { border-color: var(--neon-blue); color: var(--neon-blue); background: rgba(0,212,255,0.08); animation-delay: 0s; }
+    .badge:nth-child(2) { border-color: var(--neon-purple); color: var(--neon-purple); background: rgba(191,0,255,0.08); animation-delay: 0.5s; }
+    .badge:nth-child(3) { border-color: var(--neon-green); color: var(--neon-green); background: rgba(0,255,136,0.08); animation-delay: 1s; }
+
+    @keyframes badgeFloat {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+
+    .orbit-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid;
+      animation: spin linear infinite;
+    }
+    .orbit-ring:nth-child(1) {
+      width: 600px; height: 600px;
+      border-color: rgba(0,212,255,0.08);
+      animation-duration: 20s;
+    }
+    .orbit-ring:nth-child(2) {
+      width: 800px; height: 800px;
+      border-color: rgba(191,0,255,0.06);
+      animation-duration: 30s;
+      animation-direction: reverse;
+    }
+    .orbit-ring:nth-child(3) {
+      width: 1000px; height: 1000px;
+      border-color: rgba(0,255,136,0.04);
+      animation-duration: 40s;
+    }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    .orbit-dot {
+      position: absolute;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      top: -5px; left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* ─── SLIDE 2: WHAT IS AI AGENT ────────────── */
+    .def-card {
+      max-width: 900px;
+      width: 100%;
+      background: var(--glass);
+      backdrop-filter: blur(30px);
+      border: 1px solid rgba(0,212,255,0.2);
+      border-radius: 24px;
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .def-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple), var(--neon-pink));
+    }
+
+    .def-card::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; right: -60px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(0,212,255,0.15), transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .slide-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: var(--neon-blue);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .slide-h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(24px, 4vw, 52px);
+      font-weight: 900;
+      background: linear-gradient(135deg, #fff 30%, rgba(255,255,255,0.5));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 24px;
+    }
+
+    .big-def {
+      font-size: clamp(15px, 2vw, 20px);
+      color: rgba(255,255,255,0.8);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .big-def span {
+      color: var(--neon-blue);
+      font-weight: 700;
+    }
+
+    .trait-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .trait {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .trait:hover {
+      border-color: var(--neon-blue);
+      background: rgba(0,212,255,0.07);
+      transform: translateY(-4px);
+    }
+
+    .trait-icon { font-size: 32px; margin-bottom: 10px; }
+    .trait-label { font-size: 13px; color: rgba(255,255,255,0.6); font-weight: 500; }
+
+    /* ─── SLIDE 3: HOW IT WORKS ─────────────────── */
+    .loop-diagram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: nowrap;
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    .loop-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    .loop-circle {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      position: relative;
+      animation: nodeGlow 2s ease-in-out infinite alternate;
+    }
+
+    .loop-circle::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 2px solid;
+      animation: rotateBorder 3s linear infinite;
+    }
+
+    .lc-1 { background: radial-gradient(circle, rgba(0,212,255,0.3), rgba(0,212,255,0.05)); }
+    .lc-1::after { border-color: var(--neon-blue) transparent transparent transparent; }
+    .lc-2 { background: radial-gradient(circle, rgba(191,0,255,0.3), rgba(191,0,255,0.05)); }
+    .lc-2::after { border-color: var(--neon-purple) transparent transparent transparent; animation-delay: -1s; }
+    .lc-3 { background: radial-gradient(circle, rgba(0,255,136,0.3), rgba(0,255,136,0.05)); }
+    .lc-3::after { border-color: var(--neon-green) transparent transparent transparent; animation-delay: -0.5s; }
+    .lc-4 { background: radial-gradient(circle, rgba(255,107,0,0.3), rgba(255,107,0,0.05)); }
+    .lc-4::after { border-color: var(--neon-orange) transparent transparent transparent; animation-delay: -1.5s; }
+
+    @keyframes rotateBorder { to { transform: rotate(360deg); } }
+    @keyframes nodeGlow {
+      from { box-shadow: 0 0 10px rgba(0,212,255,0.2); }
+      to   { box-shadow: 0 0 40px rgba(0,212,255,0.5); }
+    }
+
+    .loop-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+    }
+
+    .loop-arrow {
+      font-size: 28px;
+      color: rgba(255,255,255,0.2);
+      margin: 0 12px;
+      padding-bottom: 24px;
+      animation: arrowPulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes arrowPulse {
+      0%,100% { opacity: 0.2; transform: translateX(0); }
+      50%      { opacity: 0.8; transform: translateX(6px); }
+    }
+
+    .loop-desc {
+      font-size: clamp(12px, 1.5vw, 15px);
+      color: rgba(255,255,255,0.45);
+      text-align: center;
+      max-width: 90px;
+    }
+
+    /* ─── SLIDE 4: TOOLS & MEMORY ─────────────── */
+    .tools-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      max-width: 1000px;
+      width: 100%;
+    }
+
+    .tool-card {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    .tool-card-glow {
+      position: absolute;
+      width: 150px; height: 150px;
+      border-radius: 50%;
+      top: -40px; right: -40px;
+      pointer-events: none;
+      opacity: 0.3;
+    }
+
+    .tc-1 .tool-card-glow { background: radial-gradient(circle, var(--neon-blue), transparent 70%); }
+    .tc-2 .tool-card-glow { background: radial-gradient(circle, var(--neon-purple), transparent 70%); }
+    .tc-3 .tool-card-glow { background: radial-gradient(circle, var(--neon-green), transparent 70%); }
+    .tc-4 .tool-card-glow { background: radial-gradient(circle, var(--neon-pink), transparent 70%); }
+
+    .tool-icon { font-size: 40px; margin-bottom: 16px; }
+    .tool-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    .tool-desc {
+      font-size: 14px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+    }
+
+    .tool-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .chip {
+      font-size: 11px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* ─── SLIDE 5: AGENTIC vs TRADITIONAL ───────── */
+    .vs-layout {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 24px;
+      align-items: start;
+      max-width: 1000px;
+      width: 100%;
+    }
+
+    .vs-col {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 32px;
+      border: 1px solid;
+    }
+
+    .vs-col.old {
+      border-color: rgba(255,0,110,0.3);
+      background: rgba(255,0,110,0.05);
+    }
+
+    .vs-col.new {
+      border-color: rgba(0,212,255,0.3);
+      background: rgba(0,212,255,0.05);
+    }
+
+    .vs-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+
+    .old .vs-title { color: var(--neon-pink); }
+    .new .vs-title { color: var(--neon-blue); }
+
+    .vs-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 14px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.5;
+    }
+
+    .vs-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .vs-divider {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .vs-badge {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 20px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--neon-pink), var(--neon-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .vs-line {
+      width: 2px;
+      height: 100px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.2), transparent);
+    }
+
+    /* ─── SLIDE 6: REAL WORLD USE CASES ─────────── */
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1000px;
+      width: 100%;
+    }
+
+    .case-card {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 18px;
+      padding: 28px 24px;
+      transition: all 0.4s;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .case-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .case-card:hover::before { opacity: 1; }
+    .case-card:hover { transform: translateY(-8px) scale(1.02); border-color: rgba(255,255,255,0.15); }
+
+    .cc-1::before { background: linear-gradient(90deg, var(--neon-blue), transparent); }
+    .cc-2::before { background: linear-gradient(90deg, var(--neon-purple), transparent); }
+    .cc-3::before { background: linear-gradient(90deg, var(--neon-green), transparent); }
+    .cc-4::before { background: linear-gradient(90deg, var(--neon-pink), transparent); }
+    .cc-5::before { background: linear-gradient(90deg, var(--neon-orange), transparent); }
+    .cc-6::before { background: linear-gradient(90deg, var(--neon-blue), transparent); }
+
+    .case-emoji { font-size: 36px; margin-bottom: 12px; }
+    .case-title { font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 700; margin-bottom: 8px; letter-spacing: 1px; }
+    .case-desc { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+    /* ─── SLIDE 7: MULTI-AGENT ────────────────── */
+    .multi-agent-viz {
+      position: relative;
+      width: 500px;
+      height: 380px;
+      flex-shrink: 0;
+    }
+
+    .agent-node {
+      position: absolute;
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      border: 2px solid;
+      background: var(--dark-bg);
+      z-index: 2;
+    }
+
+    .agent-name {
+      font-size: 9px;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 1px;
+      margin-top: 4px;
+      text-align: center;
+    }
+
+    .an-orchestrator {
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px; height: 100px;
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 30px rgba(0,212,255,0.4), inset 0 0 30px rgba(0,212,255,0.1);
+      animation: orchestratorPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes orchestratorPulse {
+      0%,100% { box-shadow: 0 0 20px rgba(0,212,255,0.3), inset 0 0 20px rgba(0,212,255,0.1); }
+      50%      { box-shadow: 0 0 50px rgba(0,212,255,0.7), inset 0 0 30px rgba(0,212,255,0.2); }
+    }
+
+    .an-researcher { top: 20px; left: 50%; transform: translateX(-50%); border-color: var(--neon-purple); box-shadow: 0 0 15px rgba(191,0,255,0.3); }
+    .an-coder      { top: 50%; right: 10px; transform: translateY(-50%); border-color: var(--neon-green); box-shadow: 0 0 15px rgba(0,255,136,0.3); }
+    .an-writer     { bottom: 20px; left: 50%; transform: translateX(-50%); border-color: var(--neon-pink); box-shadow: 0 0 15px rgba(255,0,110,0.3); }
+    .an-planner    { top: 50%; left: 10px; transform: translateY(-50%); border-color: var(--neon-orange); box-shadow: 0 0 15px rgba(255,107,0,0.3); }
+
+    .agent-connection {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform-origin: 0 0;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.3), transparent);
+      z-index: 1;
+      animation: connPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes connPulse {
+      0%,100% { opacity: 0.3; }
+      50%      { opacity: 0.8; }
+    }
+
+    .data-packet {
+      position: absolute;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--neon-blue);
+      box-shadow: 0 0 10px var(--neon-blue);
+      animation: packetMove 2s linear infinite;
+      z-index: 3;
+    }
+
+    @keyframes packetMove {
+      from { offset-distance: 0%; }
+      to   { offset-distance: 100%; }
+    }
+
+    .multi-info {
+      max-width: 380px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .info-point {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .ip-num {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 28px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+
+    .ip-text h4 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: #fff;
+    }
+
+    .ip-text p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+    }
+
+    /* ─── SLIDE 8: FUTURE ─────────────────────── */
+    .future-layout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .timeline {
+      width: 100%;
+      position: relative;
+      padding: 0 20px;
+    }
+
+    .timeline-bar {
+      height: 4px;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple), var(--neon-pink));
+      border-radius: 2px;
+      position: relative;
+      margin: 60px 0;
+    }
+
+    .timeline-node {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tn-dot {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: var(--neon-blue);
+      box-shadow: 0 0 15px var(--neon-blue);
+      position: relative;
+      z-index: 2;
+      animation: dotPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes dotPulse {
+      0%,100% { transform: scale(1); }
+      50%      { transform: scale(1.5); }
+    }
+
+    .tn-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-align: center;
+      color: rgba(255,255,255,0.6);
+      max-width: 80px;
+    }
+
+    .tn-top { top: auto; bottom: calc(100% + 16px); }
+    .tn-bottom { top: calc(100% + 16px); bottom: auto; }
+
+    .future-quote {
+      font-size: clamp(18px, 3vw, 28px);
+      color: rgba(255,255,255,0.9);
+      text-align: center;
+      line-height: 1.6;
+      font-style: italic;
+      font-weight: 300;
+      position: relative;
+    }
+
+    .future-quote::before {
+      content: '"';
+      font-size: 100px;
+      color: rgba(0,212,255,0.1);
+      position: absolute;
+      top: -30px; left: -20px;
+      font-family: 'Orbitron', sans-serif;
+      line-height: 1;
+    }
+
+    /* ─── SLIDE 9: KEY TAKEAWAYS ─────────────── */
+    .takeaway-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .takeaway {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border-radius: 16px;
+      padding: 28px;
+      border: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      transition: all 0.3s;
+    }
+
+    .takeaway:hover {
+      border-color: rgba(0,212,255,0.3);
+      background: rgba(0,212,255,0.05);
+      transform: translateX(8px);
+    }
+
+    .tk-num {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 36px;
+      font-weight: 900;
+      opacity: 0.15;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .tk-content h4 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--neon-blue);
+    }
+
+    .tk-content p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+    }
+
+    /* ─── SHARED HEADING SECTION ─────────────── */
+    .section-heading {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .two-col {
+      display: flex;
+      gap: 48px;
+      align-items: center;
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    /* ─── PARTICLE EFFECTS ──────────────────── */
+    .floating-particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .fp { position: absolute; border-radius: 50%; animation: floatUp linear infinite; }
+
+    @keyframes floatUp {
+      from { transform: translateY(100vh) scale(0); opacity: 1; }
+      to   { transform: translateY(-20vh) scale(1); opacity: 0; }
+    }
+
+    /* ─── KEYBOARD HINT ─────────────────────── */
+    .key-hint {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 2px;
+      z-index: 100;
+    }
+
+    /* Responsive: shrink on small screens */
+    @media (max-width: 768px) {
+      .trait-grid { grid-template-columns: repeat(2,1fr); }
+      .tools-layout { grid-template-columns: 1fr; }
+      .vs-layout { grid-template-columns: 1fr; }
+      .cases-grid { grid-template-columns: repeat(2,1fr); }
+      .two-col { flex-direction: column; }
+      .multi-agent-viz { width: 300px; height: 260px; }
+      .takeaway-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<div class="key-hint">← → ARROW KEYS TO NAVIGATE</div>
+
+<!-- ════════════════════════════════════════════ -->
+<!-- SLIDESHOW                                    -->
+<!-- ════════════════════════════════════════════ -->
+<div class="slideshow" id="slideshow">
+
+  <!-- ── SLIDE 1: TITLE ─────────────────────── -->
+  <div class="slide active" id="slide-1">
+    <div class="floating-particles" id="fp1"></div>
+    <div class="orbit-ring"><div class="orbit-dot" style="background:var(--neon-blue);box-shadow:0 0 12px var(--neon-blue)"></div></div>
+    <div class="orbit-ring"><div class="orbit-dot" style="background:var(--neon-purple);box-shadow:0 0 12px var(--neon-purple)"></div></div>
+    <div class="orbit-ring"><div class="orbit-dot" style="background:var(--neon-green);box-shadow:0 0 12px var(--neon-green)"></div></div>
+    <div style="position:relative;z-index:2;text-align:center">
+      <div class="s1-sub">Welcome to the Era of</div>
+      <h1 class="s1-title">AGENTIC AI</h1>
+      <div class="s1-sub">& Intelligent AI Agents</div>
+      <div class="badge-row">
+        <div class="badge">🤖 Autonomous</div>
+        <div class="badge">🧠 Intelligent</div>
+        <div class="badge">⚡ Goal-Driven</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 2: WHAT IS AN AI AGENT ───────── -->
+  <div class="slide" id="slide-2">
+    <div class="section-heading">
+      <div class="slide-label">01 — Foundation</div>
+      <h2 class="slide-h1">What is an AI Agent?</h2>
+    </div>
+    <div class="def-card">
+      <p class="big-def">
+        An AI Agent is a <span>software entity</span> that perceives its environment,
+        makes <span>autonomous decisions</span>, uses <span>tools</span>,
+        and takes actions to achieve a <span>specific goal</span> —
+        all without requiring constant human instruction.
+      </p>
+      <div class="trait-grid">
+        <div class="trait"><div class="trait-icon">👁️</div><div class="trait-label">Perceives Input</div></div>
+        <div class="trait"><div class="trait-icon">🧠</div><div class="trait-label">Reasons & Plans</div></div>
+        <div class="trait"><div class="trait-icon">🔧</div><div class="trait-label">Uses Tools</div></div>
+        <div class="trait"><div class="trait-icon">⚡</div><div class="trait-label">Takes Actions</div></div>
+        <div class="trait"><div class="trait-icon">🔄</div><div class="trait-label">Learns & Adapts</div></div>
+        <div class="trait"><div class="trait-icon">🎯</div><div class="trait-label">Goal-Oriented</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 3: HOW IT WORKS (LOOP) ────────── -->
+  <div class="slide" id="slide-3">
+    <div class="section-heading">
+      <div class="slide-label">02 — Core Mechanism</div>
+      <h2 class="slide-h1">The Agent Loop</h2>
+    </div>
+    <div class="loop-diagram">
+      <div class="loop-node">
+        <div class="loop-circle lc-1">🌍</div>
+        <div class="loop-label">Perceive</div>
+        <div class="loop-desc">Reads environment, user input, data</div>
+      </div>
+      <div class="loop-arrow">→</div>
+      <div class="loop-node">
+        <div class="loop-circle lc-2">🧠</div>
+        <div class="loop-label">Think</div>
+        <div class="loop-desc">LLM reasons & creates a plan</div>
+      </div>
+      <div class="loop-arrow">→</div>
+      <div class="loop-node">
+        <div class="loop-circle lc-3">🔧</div>
+        <div class="loop-label">Act</div>
+        <div class="loop-desc">Calls tools, APIs, writes code</div>
+      </div>
+      <div class="loop-arrow">→</div>
+      <div class="loop-node">
+        <div class="loop-circle lc-4">📊</div>
+        <div class="loop-label">Observe</div>
+        <div class="loop-desc">Evaluates result, updates state</div>
+      </div>
+    </div>
+    <div style="margin-top:32px;text-align:center;color:rgba(255,255,255,0.35);font-size:13px;letter-spacing:3px;font-family:'Orbitron',sans-serif;">
+      ↺ &nbsp; THIS LOOP REPEATS UNTIL THE GOAL IS ACHIEVED &nbsp; ↺
+    </div>
+  </div>
+
+  <!-- ── SLIDE 4: TOOLS & MEMORY ─────────────── -->
+  <div class="slide" id="slide-4">
+    <div class="section-heading">
+      <div class="slide-label">03 — Superpowers</div>
+      <h2 class="slide-h1">Tools, Memory & Reasoning</h2>
+    </div>
+    <div class="tools-layout">
+      <div class="tool-card tc-1">
+        <div class="tool-card-glow"></div>
+        <div class="tool-icon">🔍</div>
+        <div class="tool-title">External Tools</div>
+        <div class="tool-desc">Agents can call APIs, search the web, run code, read files, and control browsers.</div>
+        <div class="tool-chip-row">
+          <span class="chip">Search</span><span class="chip">Code Exec</span><span class="chip">APIs</span><span class="chip">Browser</span>
+        </div>
+      </div>
+      <div class="tool-card tc-2">
+        <div class="tool-card-glow"></div>
+        <div class="tool-icon">🧠</div>
+        <div class="tool-title">Memory Systems</div>
+        <div class="tool-desc">Short-term context window, long-term vector stores, and episodic memory from past sessions.</div>
+        <div class="tool-chip-row">
+          <span class="chip">RAG</span><span class="chip">Vector DB</span><span class="chip">Context</span>
+        </div>
+      </div>
+      <div class="tool-card tc-3">
+        <div class="tool-card-glow"></div>
+        <div class="tool-icon">⚙️</div>
+        <div class="tool-title">Reasoning Engines</div>
+        <div class="tool-desc">Chain-of-thought, ReAct, Tree-of-Thought — agents plan and reflect before acting.</div>
+        <div class="tool-chip-row">
+          <span class="chip">CoT</span><span class="chip">ReAct</span><span class="chip">ToT</span>
+        </div>
+      </div>
+      <div class="tool-card tc-4">
+        <div class="tool-card-glow"></div>
+        <div class="tool-icon">🌐</div>
+        <div class="tool-title">Environment Access</div>
+        <div class="tool-desc">Filesystems, databases, email, calendar — the agent interacts with the real digital world.</div>
+        <div class="tool-chip-row">
+          <span class="chip">Files</span><span class="chip">DB</span><span class="chip">Email</span><span class="chip">OS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 5: AGENTIC vs TRADITIONAL ───────── -->
+  <div class="slide" id="slide-5">
+    <div class="section-heading">
+      <div class="slide-label">04 — Evolution</div>
+      <h2 class="slide-h1">Agentic vs Traditional AI</h2>
+    </div>
+    <div class="vs-layout">
+      <div class="vs-col old">
+        <div class="vs-title">⛔ TRADITIONAL AI</div>
+        <div class="vs-item"><span class="vs-icon">❌</span> Single-turn: one question, one answer</div>
+        <div class="vs-item"><span class="vs-icon">❌</span> No memory between interactions</div>
+        <div class="vs-item"><span class="vs-icon">❌</span> Cannot use tools or APIs</div>
+        <div class="vs-item"><span class="vs-icon">❌</span> Needs human to break tasks down</div>
+        <div class="vs-item"><span class="vs-icon">❌</span> Passive — only responds to prompts</div>
+        <div class="vs-item"><span class="vs-icon">❌</span> No awareness of errors or results</div>
+      </div>
+      <div class="vs-divider">
+        <div class="vs-line"></div>
+        <div class="vs-badge">VS</div>
+        <div class="vs-line"></div>
+      </div>
+      <div class="vs-col new">
+        <div class="vs-title">✅ AGENTIC AI</div>
+        <div class="vs-item"><span class="vs-icon">✅</span> Multi-step: plans and executes sequences</div>
+        <div class="vs-item"><span class="vs-icon">✅</span> Persistent memory across sessions</div>
+        <div class="vs-item"><span class="vs-icon">✅</span> Calls external tools & real-world APIs</div>
+        <div class="vs-item"><span class="vs-icon">✅</span> Autonomously decomposes complex goals</div>
+        <div class="vs-item"><span class="vs-icon">✅</span> Proactive — initiates actions</div>
+        <div class="vs-item"><span class="vs-icon">✅</span> Self-corrects based on feedback</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 6: USE CASES ─────────────────── -->
+  <div class="slide" id="slide-6">
+    <div class="section-heading">
+      <div class="slide-label">05 — Real World</div>
+      <h2 class="slide-h1">AI Agents in the Wild</h2>
+    </div>
+    <div class="cases-grid">
+      <div class="case-card cc-1">
+        <div class="case-emoji">💻</div>
+        <div class="case-title">Software Dev</div>
+        <div class="case-desc">Writes, tests, debugs and deploys full applications autonomously</div>
+      </div>
+      <div class="case-card cc-2">
+        <div class="case-emoji">🔬</div>
+        <div class="case-title">Research</div>
+        <div class="case-desc">Scans thousands of papers, synthesizes findings, and generates hypotheses</div>
+      </div>
+      <div class="case-card cc-3">
+        <div class="case-emoji">💰</div>
+        <div class="case-title">Finance</div>
+        <div class="case-desc">Monitors markets, analyzes risk, executes trades in milliseconds</div>
+      </div>
+      <div class="case-card cc-4">
+        <div class="case-emoji">🎧</div>
+        <div class="case-title">Customer Support</div>
+        <div class="case-desc">Handles complex tickets, escalates smartly, resolves issues end-to-end</div>
+      </div>
+      <div class="case-card cc-5">
+        <div class="case-emoji">🏥</div>
+        <div class="case-title">Healthcare</div>
+        <div class="case-desc">Analyses scans, checks drug interactions, drafts clinical summaries</div>
+      </div>
+      <div class="case-card cc-6">
+        <div class="case-emoji">📈</div>
+        <div class="case-title">Marketing</div>
+        <div class="case-desc">Creates campaigns, A/B tests content, optimizes budgets automatically</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 7: MULTI-AGENT ──────────────── -->
+  <div class="slide" id="slide-7">
+    <div class="section-heading">
+      <div class="slide-label">06 — Teamwork</div>
+      <h2 class="slide-h1">Multi-Agent Systems</h2>
+    </div>
+    <div class="two-col">
+      <div class="multi-agent-viz" id="multi-viz">
+        <!-- Lines drawn by JS -->
+        <div class="agent-node an-orchestrator" style="font-size:32px;">🧠<div class="agent-name" style="color:var(--neon-blue);">ORCHESTRATOR</div></div>
+        <div class="agent-node an-researcher">🔍<div class="agent-name" style="color:var(--neon-purple);">RESEARCHER</div></div>
+        <div class="agent-node an-coder">💻<div class="agent-name" style="color:var(--neon-green);">CODER</div></div>
+        <div class="agent-node an-writer">✍️<div class="agent-name" style="color:var(--neon-pink);">WRITER</div></div>
+        <div class="agent-node an-planner">📋<div class="agent-name" style="color:var(--neon-orange);">PLANNER</div></div>
+      </div>
+      <div class="multi-info">
+        <div class="info-point">
+          <div class="ip-num">01</div>
+          <div class="ip-text">
+            <h4>Orchestrator Agent</h4>
+            <p>The central brain that breaks down the goal and delegates tasks to specialist agents.</p>
+          </div>
+        </div>
+        <div class="info-point">
+          <div class="ip-num">02</div>
+          <div class="ip-text">
+            <h4>Specialist Agents</h4>
+            <p>Each agent has a specific skill — research, coding, writing — and works in parallel.</p>
+          </div>
+        </div>
+        <div class="info-point">
+          <div class="ip-num">03</div>
+          <div class="ip-text">
+            <h4>Collaborative Output</h4>
+            <p>Results are combined, cross-checked, and verified for a superhuman outcome.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 8: FUTURE ───────────────────── -->
+  <div class="slide" id="slide-8">
+    <div class="section-heading">
+      <div class="slide-label">07 — Horizon</div>
+      <h2 class="slide-h1">The Future of Agentic AI</h2>
+    </div>
+    <div class="future-layout">
+      <div class="timeline">
+        <div class="timeline-bar">
+          <div class="timeline-node" style="left:10%">
+            <div class="tn-label tn-top" style="position:absolute;bottom:calc(100% + 16px);width:80px">Single Chatbots</div>
+            <div class="tn-dot" style="background:rgba(255,255,255,0.3);box-shadow:none"></div>
+          </div>
+          <div class="timeline-node" style="left:30%">
+            <div class="tn-label" style="position:absolute;top:calc(100% + 16px);width:80px">Tool-Using LLMs</div>
+            <div class="tn-dot" style="background:rgba(0,212,255,0.5);box-shadow:0 0 8px rgba(0,212,255,0.4)"></div>
+          </div>
+          <div class="timeline-node" style="left:55%">
+            <div class="tn-label" style="position:absolute;bottom:calc(100% + 16px);width:80px">Single Agents 2024</div>
+            <div class="tn-dot" style="background:var(--neon-blue);"></div>
+          </div>
+          <div class="timeline-node" style="left:75%">
+            <div class="tn-label" style="position:absolute;top:calc(100% + 16px);width:80px">Multi-Agent Teams NOW</div>
+            <div class="tn-dot" style="background:var(--neon-purple);box-shadow:0 0 15px var(--neon-purple)"></div>
+          </div>
+          <div class="timeline-node" style="left:95%">
+            <div class="tn-label" style="position:absolute;bottom:calc(100% + 16px);width:80px;color:var(--neon-pink)">AGI? 🚀</div>
+            <div class="tn-dot" style="background:var(--neon-pink);box-shadow:0 0 20px var(--neon-pink);animation:dotPulse 1s ease-in-out infinite"></div>
+          </div>
+        </div>
+      </div>
+      <div class="future-quote">
+        AI Agents are not just tools — they are <strong style="color:var(--neon-blue)">digital colleagues</strong> that think, plan, and act to shape the future alongside us.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 9: KEY TAKEAWAYS ──────────────── -->
+  <div class="slide" id="slide-9">
+    <div class="section-heading">
+      <div class="slide-label">08 — Summary</div>
+      <h2 class="slide-h1">Key Takeaways 🎯</h2>
+    </div>
+    <div class="takeaway-grid">
+      <div class="takeaway">
+        <div class="tk-num">01</div>
+        <div class="tk-content">
+          <h4>Agents = Autonomy</h4>
+          <p>AI Agents operate independently to achieve goals without step-by-step human guidance.</p>
+        </div>
+      </div>
+      <div class="takeaway">
+        <div class="tk-num">02</div>
+        <div class="tk-content">
+          <h4>The Perceive-Think-Act Loop</h4>
+          <p>Every agent runs a continuous cycle of observation, reasoning, and action until goal is met.</p>
+        </div>
+      </div>
+      <div class="takeaway">
+        <div class="tk-num">03</div>
+        <div class="tk-content">
+          <h4>Tools = Superpowers</h4>
+          <p>Agents amplify intelligence by connecting to search, code, APIs, and real-world systems.</p>
+        </div>
+      </div>
+      <div class="takeaway">
+        <div class="tk-num">04</div>
+        <div class="tk-content">
+          <h4>Multi-Agent > Single Agent</h4>
+          <p>Teams of specialized agents collaborate to solve problems humans can't solve alone.</p>
+        </div>
+      </div>
+      <div class="takeaway">
+        <div class="tk-num">05</div>
+        <div class="tk-content">
+          <h4>Memory is Key</h4>
+          <p>Short & long-term memory allow agents to learn from past interactions and context.</p>
+        </div>
+      </div>
+      <div class="takeaway">
+        <div class="tk-num">06</div>
+        <div class="tk-content">
+          <h4>The Future is Agentic</h4>
+          <p>We are shifting from AI assistants to AI workforces — agents doing real work at scale.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /slideshow -->
+
+<!-- ─── NAVIGATION ─────────────────────────── -->
+<div class="nav">
+  <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">←</button>
+  <div class="dot-nav" id="dotNav"></div>
+  <span class="slide-counter" id="counter">01 / 09</span>
+  <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">→</button>
+</div>
+
+<script>
+  /* ─── BACKGROUND PARTICLE CANVAS ──────────── */
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], nodes = [];
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+
+  const colors = ['#00d4ff','#bf00ff','#00ff88','#ff006e','#ff6b00'];
+
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.r = Math.random() * 1.5 + 0.3;
+      this.c = colors[Math.floor(Math.random() * colors.length)];
+      this.vx = (Math.random() - 0.5) * 0.4;
+      this.vy = (Math.random() - 0.5) * 0.4;
+      this.a = Math.random() * 0.5 + 0.1;
+    }
+    update() {
+      this.x += this.vx; this.y += this.vy;
+      if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = this.c + Math.round(this.a * 255).toString(16).padStart(2,'0');
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < 180; i++) particles.push(new Particle());
+
+  function drawConnections() {
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const d = Math.sqrt(dx*dx + dy*dy);
+        if (d < 80) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(0,212,255,${0.04 * (1 - d/80)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => { p.update(); p.draw(); });
+    drawConnections();
+    requestAnimationFrame(animate);
+  }
+  animate();
+
+  /* ─── SLIDE SYSTEM ─────────────────────────── */
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  let current = 0;
+  let isAnimating = false;
+
+  const dotNav = document.getElementById('dotNav');
+  const counter = document.getElementById('counter');
+
+  // Build dots
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotNav.appendChild(d);
+  }
+
+  function updateUI() {
+    document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('active', i === current));
+    counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+  }
+
+  function goTo(idx) {
+    if (isAnimating || idx === current) return;
+    isAnimating = true;
+    const prev = current;
+    current = idx;
+
+    slides[prev].classList.add('exit');
+    slides[prev].classList.remove('active');
+
+    setTimeout(() => {
+      slides[prev].classList.remove('exit');
+      slides[current].classList.add('active');
+      updateUI();
+      isAnimating = false;
+    }, 100);
+  }
+
+  function changeSlide(dir) {
+    const next = (current + dir + total) % total;
+    goTo(next);
+  }
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changeSlide(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') changeSlide(-1);
+  });
+
+  updateUI();
+
+  /* ─── FLOATING PARTICLES PER SLIDE ────────── */
+  function addFP(container, count) {
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement('div');
+      el.className = 'fp';
+      const size = Math.random() * 4 + 2;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      el.style.cssText = `
+        width:${size}px; height:${size}px;
+        background:${color};
+        box-shadow:0 0 ${size*3}px ${color};
+        left:${Math.random()*100}%;
+        animation-duration:${Math.random()*10+8}s;
+        animation-delay:${Math.random()*-10}s;
+        opacity:0.4;
+      `;
+      container.appendChild(el);
+    }
+  }
+
+  document.querySelectorAll('.floating-particles').forEach(fp => addFP(fp, 20));
+
+  /* ─── SVG CONNECTIONS FOR MULTI-AGENT ─────── */
+  (function drawMultiAgentLines() {
+    const viz = document.getElementById('multi-viz');
+    if (!viz) return;
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;';
+    viz.prepend(svg);
+
+    const W = 500, H = 380;
+    const cx = W/2, cy = H/2;
+    const spokes = [
+      { to: [cx, 40],   color: '#bf00ff' },
+      { to: [W-50, cy], color: '#00ff88' },
+      { to: [cx, H-40], color: '#ff006e' },
+      { to: [50, cy],   color: '#ff6b00' },
+    ];
+
+    spokes.forEach(s => {
+      const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+      line.setAttribute('x1', cx); line.setAttribute('y1', cy);
+      line.setAttribute('x2', s.to[0]); line.setAttribute('y2', s.to[1]);
+      line.setAttribute('stroke', s.color);
+      line.setAttribute('stroke-width', '1.5');
+      line.setAttribute('stroke-dasharray', '6 4');
+      line.setAttribute('opacity', '0.4');
+      svg.appendChild(line);
+
+      // Animated packet
+      const pkt = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      pkt.setAttribute('r','5');
+      pkt.setAttribute('fill', s.color);
+      pkt.style.filter = `drop-shadow(0 0 4px ${s.color})`;
+      svg.appendChild(pkt);
+
+      const anim = document.createElementNS('http://www.w3.org/2000/svg','animateMotion');
+      anim.setAttribute('dur', (Math.random()*1.5+1.5)+'s');
+      anim.setAttribute('repeatCount','indefinite');
+      anim.setAttribute('calcMode','linear');
+
+      const mpath = document.createElementNS('http://www.w3.org/2000/svg','mpath');
+      const pathEl = document.createElementNS('http://www.w3.org/2000/svg','path');
+      const pathId = 'path_' + Math.random().toString(36).slice(2);
+      pathEl.setAttribute('id', pathId);
+      pathEl.setAttribute('d', `M${cx},${cy} L${s.to[0]},${s.to[1]}`);
+      pathEl.setAttribute('fill','none');
+      svg.appendChild(pathEl);
+
+      mpath.setAttributeNS('http://www.w3.org/1999/xlink','href','#'+pathId);
+      anim.appendChild(mpath);
+      pkt.appendChild(anim);
+    });
+  })();
+</script>
+</body>
+</html>
