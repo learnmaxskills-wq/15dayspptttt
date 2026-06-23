@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Founders Showcase 2026 - Bento Masterpiece</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;700;900&family=Playfair+Display:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ==========================================================================
+       1. CORE SYSTEM & RESET
+       ========================================================================== */
+    :root {
+      --bg: #000000;
+      --surface: #0a0a0c;
+      --surface-light: #151518;
+      --text: #ffffff;
+      --text-muted: #8a8a93;
+      --gold: #D4AF37;
+      --gold-glow: rgba(212, 175, 55, 0.15);
+      --cyan: #00e5ff;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-highlight: rgba(255, 255, 255, 0.2);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      overflow: hidden;
+      width: 100vw; height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ==========================================================================
+       2. PREMIUM BACKGROUND
+       ========================================================================== */
+    .bg-stage {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    }
+
+    /* High-end subtle gradient mesh */
+    .mesh-gradient {
+      position: absolute; inset: 0;
+      background: 
+        radial-gradient(circle at 15% 50%, rgba(212, 175, 55, 0.04), transparent 40%),
+        radial-gradient(circle at 85% 30%, rgba(0, 229, 255, 0.03), transparent 40%);
+      filter: blur(60px);
+    }
+
+    /* Elegant sharp dot grid */
+    .dot-grid {
+      position: absolute; inset: 0; opacity: 0.3;
+      background-image: radial-gradient(var(--border) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    /* ==========================================================================
+       3. SLIDE ARCHITECTURE & PHYSICS ANIMATIONS
+       ========================================================================== */
+    #presentation {
+      position: relative; width: 100%; height: 100%; z-index: 10;
+    }
+
+    .slide {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      opacity: 0; visibility: hidden; pointer-events: none;
+      padding: 4vw;
+      /* Smooth organic scale transition */
+      transform: scale(0.95);
+      transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), visibility 1.2s, transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .slide.active {
+      opacity: 1; visibility: visible; pointer-events: auto;
+      transform: scale(1);
+    }
+
+    /* Bento Box Staggered Entrances */
+    .slide > *, .bento-item {
+      opacity: 0; transform: translateY(40px);
+      transition: all 1s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .slide.active > *, .slide.active .bento-item { opacity: 1; transform: translateY(0); }
+    
+    /* Stagger delays */
+    .slide.active > *:nth-child(1) { transition-delay: 0.1s; }
+    .slide.active > *:nth-child(2) { transition-delay: 0.2s; }
+    .slide.active .bento-item:nth-child(1) { transition-delay: 0.3s; }
+    .slide.active .bento-item:nth-child(2) { transition-delay: 0.4s; }
+    .slide.active .bento-item:nth-child(3) { transition-delay: 0.5s; }
+    .slide.active .bento-item:nth-child(4) { transition-delay: 0.6s; }
+
+    /* ==========================================================================
+       4. TYPOGRAPHY (Outfit + Playfair Display)
+       ========================================================================== */
+    .tag-top {
+      font-family: 'Outfit', sans-serif; font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.5rem;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .tag-top::before, .tag-top::after {
+      content: ''; width: 24px; height: 1px; background: var(--gold); opacity: 0.5;
+    }
+
+    .grand-title {
+      font-family: 'Playfair Display', serif; font-weight: 500;
+      font-size: clamp(3.5rem, 7vw, 7rem); line-height: 1.1;
+      letter-spacing: -0.02em; text-align: center; margin-bottom: 1.5rem;
+    }
+    .grand-title.sans { font-family: 'Outfit', sans-serif; font-weight: 800; letter-spacing: -0.04em; }
+
+    .subtitle {
+      font-family: 'Outfit', sans-serif; font-size: clamp(1.2rem, 1.5vw, 1.5rem);
+      font-weight: 300; color: var(--text-muted); text-align: center;
+      max-width: 900px; line-height: 1.6; margin-bottom: 3rem;
+    }
+
+    .highlight-serif {
+      font-family: 'Playfair Display', serif; font-style: italic; color: var(--gold);
+    }
+
+    /* ==========================================================================
+       5. BENTO GRID ARCHITECTURE
+       ========================================================================== */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto;
+      gap: 20px;
+      width: 100%; max-width: 1300px;
+    }
+
+    .bento-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 32px;
+      padding: 3rem;
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column; justify-content: center;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 20px 40px rgba(0,0,0,0.5);
+    }
+    
+    /* Subtle inner glow on hover */
+    .bento-item::before {
+      content: ''; position: absolute; inset: 0; background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.06), transparent 40%); opacity: 0; transition: opacity 0.3s; pointer-events: none;
+    }
+    .bento-item:hover::before { opacity: 1; }
+
+    /* Grid span helpers */
+    .span-1 { grid-column: span 1; }
+    .span-2 { grid-column: span 2; }
+    .span-3 { grid-column: span 3; }
+    .span-4 { grid-column: span 4; }
+    .row-span-2 { grid-row: span 2; }
+
+    /* Bento inner typography */
+    .bento-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em;
+      color: var(--gold); text-transform: uppercase; margin-bottom: 1rem;
+    }
+    .bento-label.cyan { color: var(--cyan); }
+    
+    .bento-title {
+      font-family: 'Outfit', sans-serif; font-size: 2.2rem; font-weight: 600;
+      letter-spacing: -0.02em; margin-bottom: 1rem; line-height: 1.1;
+    }
+    .bento-title.serif { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 500; font-style: italic;}
+    
+    .bento-text {
+      font-size: 1.15rem; font-weight: 300; line-height: 1.6; color: var(--text-muted);
+    }
+
+    /* Lists inside bento */
+    .bento-tag-list { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 1.5rem; }
+    .bento-tag {
+      background: var(--surface-light); border: 1px solid var(--border-highlight);
+      padding: 8px 16px; border-radius: 100px; font-size: 0.85rem; font-weight: 500;
+      letter-spacing: 0.05em; color: var(--text);
+    }
+
+    /* ==========================================================================
+       6. AWARDS (Showcase Stage)
+       ========================================================================== */
+    .award-stage {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;
+    }
+
+    .award-frame {
+      width: 55vw; max-width: 900px; aspect-ratio: 16/9; position: relative;
+      border-radius: 24px; overflow: hidden;
+      margin-bottom: 3rem;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+
+    .award-img-real {
+      width: 100%; height: 100%; object-fit: cover;
+      transform: scale(1.1); filter: blur(10px) brightness(0.5);
+      transition: all 2s cubic-bezier(0.25, 1, 0.5, 1) 0.4s;
+    }
+
+    .slide.active .award-img-real {
+      transform: scale(1); filter: blur(0) brightness(1);
+    }
+
+    .award-title-group { text-align: center; }
+    .award-name {
+      font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 500;
+      margin-bottom: 0.5rem; line-height: 1;
+    }
+    .award-category {
+      font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 600;
+      letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase;
+    }
+
+    /* ==========================================================================
+       6.5 THEMATIC BACKGROUNDS & FLOATING ELEMENTS
+       ========================================================================== */
+    .theme-local { --theme-color: 255, 170, 0; --theme-hex: #ffaa00; }
+    .theme-comm { --theme-color: 0, 229, 255; --theme-hex: #00e5ff; }
+    .theme-agri { --theme-color: 0, 255, 136; --theme-hex: #00ff88; }
+    .theme-fashion { --theme-color: 255, 0, 255; --theme-hex: #ff00ff; }
+
+    .slide[class*="theme-"] .mesh-gradient-theme {
+      position: absolute; inset: 0; pointer-events: none; z-index: -1;
+      background: radial-gradient(circle at 50% 50%, rgba(var(--theme-color), 0.08), transparent 60%);
+      transition: opacity 1s;
+    }
+
+    .floating-element {
+      position: absolute;
+      color: rgba(var(--theme-color), 0.15);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 200;
+      pointer-events: none;
+      z-index: -1;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+    }
+
+    .float-1 { left: 10%; animation-duration: 25s; animation-delay: 0s; font-size: 3rem; }
+    .float-2 { left: 30%; animation-duration: 20s; animation-delay: -5s; font-size: 2rem; }
+    .float-3 { left: 50%; animation-duration: 30s; animation-delay: -12s; font-size: 4rem; }
+    .float-4 { left: 70%; animation-duration: 22s; animation-delay: -8s; font-size: 1.5rem; }
+    .float-5 { left: 85%; animation-duration: 28s; animation-delay: -3s; font-size: 2.5rem; }
+
+    /* ==========================================================================
+       7. POSTER SLIDE & UI
+       ========================================================================== */
+    .slide-poster { padding: 0; background: #000; }
+    .poster-img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .nav-bar {
+      position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
+      display: flex; align-items: center; gap: 20px; z-index: 100;
+      background: var(--surface); padding: 12px 24px; border-radius: 100px;
+      border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .nav-btn {
+      background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; transition: 0.3s;
+    }
+    .nav-btn:hover { color: #fff; }
+    .progress-track { width: 150px; height: 2px; background: var(--border); position: relative; }
+    .progress-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--text); width: 0%; transition: width 0.3s; }
+
+    /* ==========================================================================
+       8. GLOBAL BRANDING
+       ========================================================================== */
+    .global-logo {
+      position: fixed;
+      top: 35px;
+      right: 40px;
+      height: 60px;
+      width: auto;
+      z-index: 1000;
+      opacity: 0.9;
+      filter: drop-shadow(0 4px 15px rgba(0,0,0,0.5));
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-stage">
+    <div class="mesh-gradient"></div>
+    <div class="dot-grid"></div>
+  </div>
+
+  <!-- Global Brand Logo -->
+  <img src="learnmax-logo.png" class="global-logo" alt="LearnMax">
+
+  <div class="nav-bar">
+    <button class="nav-btn" onclick="prevSlide()">❮</button>
+    <div class="progress-track"><div class="progress-fill" id="progressBar"></div></div>
+    <button class="nav-btn" onclick="nextSlide()">❯</button>
+  </div>
+
+  <div id="presentation">
+
+    <!-- SLIDE 1: POSTER -->
+    <div class="slide slide-poster active">
+      <img src="awards/poster.jpg" alt="The Founders Showcase 2026 Poster" class="poster-img">
+    </div>
+
+    <!-- SLIDE 2: WELCOME -->
+    <div class="slide">
+      <div class="tag-top">The Founders Showcase 2026</div>
+      <h1 class="grand-title">A Celebration<br>Of Building</h1>
+      <p class="subtitle">Tonight is a celebration of curiosity. A celebration of creativity. A celebration of courage. And a celebration of what becomes possible when young minds are given the opportunity to build.</p>
+    </div>
+
+    <!-- SLIDE 3: VALUES (Bento) -->
+    <div class="slide">
+      <div class="tag-top">The Core Philosophy</div>
+      <div class="bento-grid">
+        <div class="bento-item span-1">
+          <div class="bento-label">01</div>
+          <h2 class="bento-title">Curiosity</h2>
+          <p class="bento-text">Asking the profound questions that inevitably shape the tools of tomorrow.</p>
+        </div>
+        <div class="bento-item span-1">
+          <div class="bento-label">02</div>
+          <h2 class="bento-title">Creativity</h2>
+          <p class="bento-text">Designing elegant, human-centric solutions that do not yet exist in the world.</p>
+        </div>
+        <div class="bento-item span-1">
+          <div class="bento-label">03</div>
+          <h2 class="bento-title">Courage</h2>
+          <p class="bento-text">Stepping boldly into the unknown to build complex systems from zero.</p>
+        </div>
+        <div class="bento-item span-1">
+          <div class="bento-label">04</div>
+          <h2 class="bento-title">Execution</h2>
+          <p class="bento-text">The relentless pursuit of turning abstract ideas into tangible, working reality.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: THE 15 DAY CHALLENGE (Bento) -->
+    <div class="slide">
+      <div class="tag-top">The Challenge</div>
+      <div class="bento-grid">
+        <div class="bento-item span-4" style="text-align: center; padding: 4rem;">
+          <h1 class="grand-title sans" style="margin: 0; font-size: clamp(3rem, 5vw, 5rem);">From Zero to Founders</h1>
+        </div>
+        <div class="bento-item span-2">
+          <div class="bento-label">FIFTEEN DAYS AGO</div>
+          <p class="bento-text" style="font-size: 1.4rem;">No Development Team<br>No Investors<br>No Prior Startup Experience<br>No Programming Background</p>
+        </div>
+        <div class="bento-item span-2" style="background: var(--surface-light); border-color: var(--border-highlight);">
+          <div class="bento-label cyan">TONIGHT</div>
+          <p class="bento-text" style="font-size: 1.4rem; color: #fff;">Solved real-world problems<br>Explored Artificial Intelligence<br>Built digital products & websites<br>Created marketing campaigns</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: GUEST 1 DR. DEORA (Bento Masterpiece) -->
+    <div class="slide">
+      <div class="tag-top">Distinguished Guest</div>
+      <div class="bento-grid" style="grid-template-columns: repeat(3, 1fr); max-width: 1400px;">
+        <!-- Massive Name Box -->
+        <div class="bento-item span-2" style="padding: 4rem; background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, transparent 60%); border-color: var(--gold-glow);">
+          <h1 class="grand-title serif" style="text-align: left; margin: 0; font-size: 5rem; line-height: 1; color: var(--gold);">Dr. Avnip Deora</h1>
+          <p class="bento-text" style="font-size: 1.5rem; margin-top: 1rem; color: #fff;">President of the Institution's Innovation Council</p>
+          <p class="bento-text" style="font-size: 1.2rem; margin-top: 2rem; max-width: 700px; font-weight: 300;">With decades of experience in education and technology, he has dedicated his career to promoting innovation, entrepreneurship, and practical learning among students.</p>
+        </div>
+        
+        <!-- Quote Box -->
+        <div class="bento-item span-1" style="display: flex; flex-direction: column; justify-content: space-between; padding: 4rem;">
+          <div class="bento-label gold" style="color: var(--gold);">CORE PHILOSOPHY</div>
+          <h2 class="bento-title serif highlight-serif" style="font-size: 3.5rem; margin: 0; line-height: 1.1;">"Learn<br>by<br>Doing"</h2>
+        </div>
+
+        <!-- Roles Box -->
+        <div class="bento-item span-2" style="display: flex; flex-direction: column; justify-content: center; padding: 3rem 4rem;">
+           <div class="bento-label">AN ACCOMPLISHED LEADER</div>
+           <div class="bento-tag-list" style="margin-top: 1rem;">
+            <span class="bento-tag" style="font-size: 1rem; padding: 12px 24px;">Academic Leader</span>
+            <span class="bento-tag" style="font-size: 1rem; padding: 12px 24px;">Technology Educator</span>
+            <span class="bento-tag" style="font-size: 1rem; padding: 12px 24px;">Startup Mentor</span>
+            <span class="bento-tag" style="font-size: 1rem; padding: 12px 24px;">Community Builder</span>
+          </div>
+        </div>
+
+        <!-- Honor Box -->
+        <div class="bento-item span-1" style="justify-content: center; align-items: center; text-align: center; background: var(--surface-light);">
+          <p class="bento-text" style="font-size: 1.4rem; color: var(--gold); font-style: italic; font-family: 'Playfair Display', serif;">"Sir, we are truly honored by your presence."</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: GUEST 2 MRS. KAUR (Bento) -->
+    <div class="slide">
+      <div class="tag-top">Distinguished Guest</div>
+      <div class="bento-grid">
+        <!-- Name Box -->
+        <div class="bento-item span-2 row-span-2" style="justify-content: flex-end; padding: 4rem;">
+          <h1 class="grand-title" style="text-align: left; margin: 0; font-size: 4rem; line-height: 1;">Mrs.<br>Inderpreet<br>Kaur</h1>
+          <p class="bento-label" style="margin-top: 1rem; color: var(--text-muted);">Vice Principal, MGN Public School</p>
+        </div>
+        <!-- Impact Box -->
+        <div class="bento-item span-2">
+          <div class="bento-label">EDUCATIONAL LEADERSHIP</div>
+          <h2 class="bento-title" style="font-size: 1.8rem; font-weight: 400;">Consistently encouraging initiatives that help students move beyond traditional learning.</h2>
+        </div>
+        <!-- Vision Box -->
+        <div class="bento-item span-2" style="background: rgba(0, 229, 255, 0.05); border-color: rgba(0, 229, 255, 0.1);">
+          <div class="bento-label cyan">CORE VISION</div>
+          <p class="bento-text" style="color: #fff; margin-bottom: 1rem;">Empowering students to develop critical abilities:</p>
+          <div class="bento-tag-list" style="margin: 0;">
+            <span class="bento-tag" style="border-color: var(--cyan); color: var(--cyan);">Confidence</span>
+            <span class="bento-tag" style="border-color: var(--cyan); color: var(--cyan);">Creativity</span>
+            <span class="bento-tag" style="border-color: var(--cyan); color: var(--cyan);">Future-Ready Skills</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: GRATITUDE -->
+    <div class="slide">
+      <div class="tag-top">Gratitude</div>
+      <h1 class="grand-title sans">The Pillars of Support</h1>
+      <div class="bento-grid" style="margin-top: 2rem;">
+        <div class="bento-item span-2">
+          <div class="bento-label">TEACHERS OF MGN PUBLIC SCHOOL</div>
+          <p class="bento-text" style="font-size: 1.4rem; color: #fff;">Your encouragement and belief in your students have helped make this journey possible.</p>
+        </div>
+        <div class="bento-item span-2" style="background: var(--surface-light);">
+          <div class="bento-label gold">THE PARENTS</div>
+          <p class="bento-text" style="font-size: 1.4rem;">Behind every confident student is a family that believed in them, supported them, encouraged them, and gave them the freedom to explore.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 8: VIDEO INTRO -->
+    <div class="slide">
+      <div class="tag-top">The Process</div>
+      <h1 class="grand-title serif">The Journey</h1>
+      <p class="subtitle">Every startup begins with a question.<br>Every innovation begins with an idea.<br>And every achievement begins with someone willing to take the first step.</p>
+      <div style="margin-top: 2rem; padding: 15px 40px; background: #fff; color: #000; border-radius: 100px; font-weight: 700; font-size: 1.1rem; cursor: pointer;">
+        ▶ PLAY JOURNEY VIDEO
+      </div>
+    </div>
+
+    <!-- SLIDE 9: A STORY OF... -->
+    <div class="slide">
+      <div class="tag-top">Reflection</div>
+      <h1 class="grand-title sans">A Story Of...</h1>
+      <div class="bento-grid" style="margin-top: 2rem;">
+        <div class="bento-item span-1" style="text-align: center;"><h2 class="bento-title" style="margin:0;">Growth</h2></div>
+        <div class="bento-item span-1" style="text-align: center;"><h2 class="bento-title" style="margin:0;">Resilience</h2></div>
+        <div class="bento-item span-1" style="text-align: center;"><h2 class="bento-title" style="margin:0;">Learning</h2></div>
+        <div class="bento-item span-1" style="text-align: center;"><h2 class="bento-title" style="margin:0;">Building</h2></div>
+        <div class="bento-item span-2" style="text-align: center; opacity: 0.5;"><h2 class="bento-title" style="margin:0; text-decoration: line-through;">Failing</h2></div>
+        <div class="bento-item span-2" style="text-align: center;"><h2 class="bento-title" style="margin:0;">Improving</h2></div>
+        <div class="bento-item span-4" style="text-align: center; background: var(--surface-light); border-color: var(--gold);"><h2 class="bento-title highlight-serif" style="margin:0; font-size: 3rem;">Continuing Forward</h2></div>
+      </div>
+    </div>
+
+    <!-- SLIDE 10: COHORT INTRO -->
+    <div class="slide">
+      <div class="tag-top">The True Stars</div>
+      <h1 class="grand-title">Meet The Founders</h1>
+      <p class="subtitle">Tonight, they are not simply students presenting projects. Tonight, they stand before us as creators, innovators, and founders.</p>
+    </div>
+
+    <!-- SLIDE 11: FOUNDER 1 MAITRI (Bento) -->
+    <div class="slide theme-local">
+      <div class="mesh-gradient-theme"></div>
+      <div class="floating-element float-1">[ B2B ]</div>
+      <div class="floating-element float-2">★</div>
+      <div class="floating-element float-3">⌖</div>
+      <div class="floating-element float-4">[ B2C ]</div>
+      <div class="floating-element float-5">◈</div>
+      
+      <div class="tag-top" style="color: var(--theme-hex);">Founder Profile</div>
+      <div class="bento-grid">
+        <div class="bento-item span-2 row-span-2" style="justify-content: flex-end; padding: 4rem;">
+          <h1 class="grand-title sans" style="text-align: left; margin: 0; font-size: 5rem;">Maitri</h1>
+          <p class="bento-label" style="margin-top: 1rem; font-size: 1rem; color: var(--theme-hex);">Local Business Discovery</p>
+        </div>
+        <div class="bento-item span-2">
+          <div class="bento-label">THE PROBLEM</div>
+          <p class="bento-text">Finding the right service provider is often time-consuming. Consumers struggle to identify trustworthy local businesses.</p>
+        </div>
+        <div class="bento-item span-2" style="background: rgba(var(--theme-color), 0.05); border-color: rgba(var(--theme-color), 0.2);">
+          <div class="bento-label" style="color: var(--theme-hex);">THE SOLUTION</div>
+          <p class="bento-text" style="color: #fff;">An intelligent platform bridging the gap between specific consumer needs and relevant local businesses, creating visibility and smarter decisions.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 12: FOUNDER 2 MAHI (Bento) -->
+    <div class="slide theme-comm">
+      <div class="mesh-gradient-theme"></div>
+      <div class="floating-element float-1">[ VOICE_SYS ]</div>
+      <div class="floating-element float-2">〰〰〰</div>
+      <div class="floating-element float-3">🗣</div>
+      <div class="floating-element float-4">[ NLP ]</div>
+      <div class="floating-element float-5">✦</div>
+      
+      <div class="tag-top" style="color: var(--theme-hex);">Founder Profile</div>
+      <div class="bento-grid">
+        <div class="bento-item span-2 row-span-2" style="justify-content: flex-end; padding: 4rem;">
+          <h1 class="grand-title sans" style="text-align: left; margin: 0; font-size: 4rem; line-height: 1;">Mahi<br>Sehgal</h1>
+          <p class="bento-label" style="margin-top: 1rem; font-size: 1rem; color: var(--theme-hex);">AI Communication Coach</p>
+        </div>
+        <div class="bento-item span-2">
+          <div class="bento-label">THE PROBLEM</div>
+          <p class="bento-text">Many talented individuals possess great ideas but struggle to express them with confidence and fluency.</p>
+        </div>
+        <div class="bento-item span-2" style="background: rgba(var(--theme-color), 0.05); border-color: rgba(var(--theme-color), 0.2);">
+          <div class="bento-label" style="color: var(--theme-hex);">THE SOLUTION</div>
+          <p class="bento-text" style="color: #fff;">An AI coach providing personalized feedback to build speaking skills, vocabulary, and impactful communication effectiveness.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 13: FOUNDER 3 PRATEEK (Bento) -->
+    <div class="slide theme-agri">
+      <div class="mesh-gradient-theme"></div>
+      <div class="floating-element float-1">[ SCAN ]</div>
+      <div class="floating-element float-2">⛬</div>
+      <div class="floating-element float-3">⚗</div>
+      <div class="floating-element float-4">[ AGRI_TECH ]</div>
+      <div class="floating-element float-5">⌘</div>
+      
+      <div class="tag-top" style="color: var(--theme-hex);">Founder Profile</div>
+      <div class="bento-grid">
+        <div class="bento-item span-2 row-span-2" style="justify-content: flex-end; padding: 4rem;">
+          <h1 class="grand-title sans" style="text-align: left; margin: 0; font-size: 4rem; line-height: 1;">Prateek<br>Sharma</h1>
+          <p class="bento-label" style="margin-top: 1rem; font-size: 1rem; color: var(--theme-hex);">AI Crop Disease Identification</p>
+        </div>
+        <div class="bento-item span-2">
+          <div class="bento-label">THE PROBLEM</div>
+          <p class="bento-text">Farmers face significant losses due to delayed identification of crop diseases.</p>
+        </div>
+        <div class="bento-item span-2" style="background: rgba(var(--theme-color), 0.05); border-color: rgba(var(--theme-color), 0.2);">
+          <div class="bento-label" style="color: var(--theme-hex);">THE SOLUTION</div>
+          <p class="bento-text" style="color: #fff;">An AI-powered web app that analyzes photos to instantly identify diseases, provide solutions, and connect farmers with a knowledge-sharing community.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 14: FOUNDER 4 CHANPREET (Bento) -->
+    <div class="slide theme-fashion">
+      <div class="mesh-gradient-theme"></div>
+      <div class="floating-element float-1">[ STYLE_GEN ]</div>
+      <div class="floating-element float-2">✦</div>
+      <div class="floating-element float-3">✧</div>
+      <div class="floating-element float-4">[ TREND_MAP ]</div>
+      <div class="floating-element float-5">◨</div>
+      
+      <div class="tag-top" style="color: var(--theme-hex);">Founder Profile</div>
+      <div class="bento-grid">
+        <div class="bento-item span-2 row-span-2" style="justify-content: flex-end; padding: 4rem;">
+          <h1 class="grand-title sans" style="text-align: left; margin: 0; font-size: 4rem; line-height: 1;">Chanpreet<br>Singh</h1>
+          <p class="bento-label" style="margin-top: 1rem; font-size: 1rem; color: var(--theme-hex);">AI Fashion Assistant</p>
+        </div>
+        <div class="bento-item span-2">
+          <div class="bento-label">THE PROBLEM</div>
+          <p class="bento-text">Choosing the right outfit and optimal clothing combinations from a wardrobe is a daily struggle for millions.</p>
+        </div>
+        <div class="bento-item span-2" style="background: rgba(var(--theme-color), 0.05); border-color: rgba(var(--theme-color), 0.2);">
+          <div class="bento-label" style="color: var(--theme-hex);">THE SOLUTION</div>
+          <p class="bento-text" style="color: #fff;">An AI fashion assistant that analyzes uploaded clothing items and suggests intelligent, personalized outfit recommendations.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 15: AWARDS INTRO -->
+    <div class="slide">
+      <div class="tag-top">The Recognition</div>
+      <h1 class="grand-title">Founder Recognition</h1>
+      <p class="subtitle">Over the past fifteen days, our founders have demonstrated creativity, resilience, problem-solving ability, and the courage to bring their ideas to life.</p>
+    </div>
+
+    <!-- SLIDE 16: AWARD 1 MAITRI -->
+    <div class="slide">
+      <div class="award-stage">
+        <div class="award-frame">
+          <img src="awards/award-maitri.jpg" class="award-img-real" alt="Community Impact Award - Maitri">
+        </div>
+        <div class="award-title-group">
+          <h2 class="award-name">Maitri</h2>
+          <div class="award-category">Community Impact Founder Award</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 17: AWARD 2 MAHI -->
+    <div class="slide">
+      <div class="award-stage">
+        <div class="award-frame">
+          <img src="awards/award-mahi.jpg" class="award-img-real" alt="Future Communicator Award - Mahi Sehgal">
+        </div>
+        <div class="award-title-group">
+          <h2 class="award-name">Mahi Sehgal</h2>
+          <div class="award-category">Future Communicator Award</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 18: AWARD 3 PRATEEK -->
+    <div class="slide">
+      <div class="award-stage">
+        <div class="award-frame">
+          <img src="awards/award-prateek.jpg" class="award-img-real" alt="AgriTech Innovation Award - Prateek Sharma">
+        </div>
+        <div class="award-title-group">
+          <h2 class="award-name">Prateek Sharma</h2>
+          <div class="award-category">AgriTech Innovation Award</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 19: AWARD 4 CHANPREET -->
+    <div class="slide">
+      <div class="award-stage">
+        <div class="award-frame">
+          <img src="awards/award-chanpreet.jpg" class="award-img-real" alt="AI Lifestyle Innovation Award - Chanpreet Singh">
+        </div>
+        <div class="award-title-group">
+          <h2 class="award-name">Chanpreet Singh</h2>
+          <div class="award-category">AI Lifestyle Innovation Award</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 20: LEARNMAX FOUNDERS RECOGNITION (ALL) -->
+    <div class="slide">
+      <div class="tag-top">Cohort 2026</div>
+      <h1 class="grand-title sans">LearnMax Founders</h1>
+      <p class="subtitle">The courage to build. The willingness to learn. The determination to transform an idea into reality.</p>
+      <div class="bento-grid" style="margin-top: 3rem;">
+        <div class="bento-item span-1" style="text-align: center;"><h2 class="bento-title" style="margin:0;">Mahi Sehgal</h2></div>
+        <div class="bento-item span-1" style="text-align: center;"><h2 class="bento-title" style="margin:0;">Maitri</h2></div>
+        <div class="bento-item span-1" style="text-align: center;"><h2 class="bento-title" style="margin:0;">Prateek Sharma</h2></div>
+        <div class="bento-item span-1" style="text-align: center;"><h2 class="bento-title" style="margin:0;">Chanpreet Singh</h2></div>
+      </div>
+    </div>
+
+    <!-- SLIDE 21: CLOSING SPEECH HIGHLIGHTS -->
+    <div class="slide">
+      <div class="tag-top">Closing Reflections</div>
+      <p class="grand-title serif" style="font-size: 3rem; color: var(--gold); line-height: 1.4; max-width: 1200px;">
+        "The most valuable outcome of this journey is not the startup itself. It is the confidence these students have gained... And the belief that they can build something meaningful."
+      </p>
+      <div class="tag-top" style="margin-top: 4rem;">PROVING THAT AGE IS NEVER A LIMITATION TO INNOVATION</div>
+    </div>
+
+    <!-- SLIDE 22: LEARNMAX VISION -->
+    <div class="slide">
+      <div class="tag-top">The Vision</div>
+      <h1 class="grand-title">Empowering Creators</h1>
+      <p class="subtitle" style="max-width: 1200px;">
+        Young people must learn how to think. How to solve problems. How to innovate. And most importantly, how to build.
+      </p>
+      <div class="bento-grid" style="margin-top: 2rem;">
+        <div class="bento-item span-4" style="text-align: center; border-color: var(--cyan); background: rgba(0, 229, 255, 0.05);">
+          <div class="bento-label cyan">OUR MISSION</div>
+          <p class="bento-text" style="font-size: 1.8rem; color: #fff;">To help create a generation of confident innovators, builders, entrepreneurs, and changemakers who are ready for the future.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 23: CONCLUSION -->
+    <div class="slide">
+      <h1 class="grand-title" style="font-size: clamp(4rem, 8vw, 10rem); margin-bottom: 0;">The Future</h1>
+      <h1 class="grand-title serif" style="font-size: clamp(3rem, 6vw, 7rem); color: var(--gold); font-style: italic;">Is Built Here.</h1>
+      <div class="tag-top" style="margin-top: 4rem; color: var(--text-muted); border-color: var(--border);">LEARNMAX FOUNDERS SHOWCASE 2026</div>
+    </div>
+
+  </div>
+
+  <script>
+    // --- STABLE NAVIGATION ---
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const progressBar = document.getElementById('progressBar');
+    
+    function updateSlides() {
+      slides.forEach((slide, index) => {
+        if (index === currentSlide) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+      // Update progress bar
+      const progress = ((currentSlide + 1) / slides.length) * 100;
+      progressBar.style.width = progress + '%';
+    }
+
+    function nextSlide() {
+      if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        updateSlides();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSlides();
+      }
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      }
+      if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      }
+    });
+
+    // Subtly track mouse movement to update CSS custom properties for hover glows on bento items
+    document.addEventListener('mousemove', e => {
+      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+    });
+
+    // Initialize
+    updateSlides();
+  </script>
+</body>
+</html>
