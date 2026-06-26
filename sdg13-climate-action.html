@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#020b14">
+<title>SDG 13 – Climate Action | Vrishti Arora</title>
+<meta name="description" content="Premium school presentation on SDG 13 Climate Action by Vrishti Arora">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ─────────────── RESET ─────────────── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{height:100%;height:100dvh;overflow:hidden;-webkit-text-size-adjust:100%}
+body{height:100%;width:100%;overflow:hidden;background:#000;font-family:'Inter','Space Grotesk',sans-serif;touch-action:pan-y}
+
+/* ─────────────── PRESENTER ─────────────── */
+#pres{position:absolute;inset:0;overflow:hidden}
+
+/* ─────────────── SLIDES ─────────────── */
+.slide{
+  position:absolute;inset:0;width:100%;height:100%;
+  overflow-y:auto;overflow-x:hidden;
+  opacity:0;pointer-events:none;
+  transition:opacity .75s cubic-bezier(.4,0,.2,1),transform .75s cubic-bezier(.4,0,.2,1);
+  transform:translateX(100%);
+  -webkit-overflow-scrolling:touch;
+}
+.slide.active{opacity:1;pointer-events:all;transform:translateX(0)}
+.slide.prev{opacity:0;transform:translateX(-100%)}
+
+/* ─────────────── BG IMAGE ─────────────── */
+.bg-img{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  z-index:0;
+  transition:transform 8s ease;
+  min-height:100vh;
+}
+.slide.active .bg-img{transform:scale(1.06)}
+.slide:not(.active) .bg-img{transform:scale(1)}
+
+/* ─────────────── OVERLAYS ─────────────── */
+.ov-dark{position:absolute;top:0;left:0;width:100%;height:100%;min-height:100vh;background:rgba(2,8,18,.72);z-index:1}
+.ov-grad-b{position:absolute;top:0;left:0;width:100%;height:100%;min-height:100vh;background:linear-gradient(to top,rgba(2,8,18,.95) 0%,rgba(2,8,18,.5) 50%,rgba(2,8,18,.3) 100%);z-index:2}
+.ov-grad-l{position:absolute;top:0;left:0;width:100%;height:100%;min-height:100vh;background:linear-gradient(to right,rgba(2,8,18,.92) 0%,rgba(2,8,18,.55) 60%,rgba(2,8,18,.1) 100%);z-index:2}
+.ov-green{position:absolute;top:0;left:0;width:100%;height:100%;min-height:100vh;background:linear-gradient(135deg,rgba(10,40,20,.8) 0%,rgba(2,8,18,.6) 50%,rgba(4,25,45,.7) 100%);z-index:1}
+.ov-split-l{position:absolute;top:0;left:0;bottom:0;width:50%;min-height:100vh;background:linear-gradient(135deg,rgba(5,40,15,.9),rgba(10,60,25,.8));z-index:1}
+.ov-split-r{position:absolute;top:0;right:0;bottom:0;width:50%;min-height:100vh;background:linear-gradient(135deg,rgba(60,5,5,.9),rgba(40,5,5,.8));z-index:1}
+
+/* ─────────────── GLASS ─────────────── */
+.g{background:rgba(255,255,255,.07);backdrop-filter:blur(18px) saturate(1.5);-webkit-backdrop-filter:blur(18px) saturate(1.5);border:1px solid rgba(255,255,255,.16);border-radius:20px;box-shadow:0 8px 40px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.18)}
+.gd{background:rgba(4,14,32,.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.11);border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,.5)}
+.gg{background:rgba(34,197,94,.12);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(134,239,172,.28);border-radius:16px;box-shadow:0 4px 28px rgba(34,197,94,.18)}
+.gb{background:rgba(14,165,233,.12);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(125,211,252,.28);border-radius:16px}
+.gy{background:rgba(251,191,36,.12);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(251,191,36,.28);border-radius:16px}
+
+/* ─────────────── TYPE ─────────────── */
+.h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.8rem,8vw,6.5rem);font-weight:800;color:#fff;line-height:.95;letter-spacing:-.03em;text-shadow:0 4px 32px rgba(0,0,0,.7)}
+.h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,4.5vw,3.2rem);font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.02em;text-shadow:0 3px 20px rgba(0,0,0,.6)}
+.h3{font-family:'Space Grotesk',sans-serif;font-size:clamp(1rem,2.5vw,1.8rem);font-weight:700;color:#fff;line-height:1.2}
+.body{font-size:clamp(.78rem,1.6vw,1rem);color:rgba(255,255,255,.86);line-height:1.8}
+.small{font-size:clamp(.65rem,1.3vw,.82rem);color:rgba(255,255,255,.65);line-height:1.6}
+.cg{color:#86efac}.cb{color:#7dd3fc}.cy{color:#fcd34d}.cr{color:#fca5a5}
+.grad-g{background:linear-gradient(135deg,#86efac,#22c55e,#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200%;animation:gradS 3s ease infinite}
+
+/* Tag pills */
+.tag{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:100px;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.tg{background:rgba(34,197,94,.18);color:#86efac;border:1px solid rgba(34,197,94,.38)}
+.tb{background:rgba(14,165,233,.18);color:#7dd3fc;border:1px solid rgba(14,165,233,.38)}
+.ty{background:rgba(251,191,36,.18);color:#fcd34d;border:1px solid rgba(251,191,36,.38)}
+.dot-live{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 10px #22c55e;animation:pulse 2s infinite}
+
+/* ─────────────── ANIMATIONS ─────────────── */
+@keyframes gradS{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes pulse{0%,100%{opacity:.45;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+@keyframes shimmer{0%{background-position:200% 50%}100%{background-position:-200% 50%}}
+@keyframes glow{0%,100%{box-shadow:0 0 20px rgba(34,197,94,.2)}50%{box-shadow:0 0 45px rgba(34,197,94,.55),0 0 90px rgba(34,197,94,.2)}}
+@keyframes leafFall{0%{transform:translateY(-20px) rotate(-10deg) translateX(0);opacity:0}10%{opacity:.8}90%{opacity:.6}100%{transform:translateY(100vh) rotate(360deg) translateX(40px);opacity:0}}
+@keyframes drift{0%{transform:translateY(0) translateX(0);opacity:.6}100%{transform:translateY(-90vh) translateX(var(--dx,50px));opacity:0}}
+/* entry animations */
+@keyframes fU{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fL{from{opacity:0;transform:translateX(-32px)}to{opacity:1;transform:translateX(0)}}
+@keyframes fR{from{opacity:0;transform:translateX(32px)}to{opacity:1;transform:translateX(0)}}
+@keyframes sI{from{opacity:0;transform:scale(.84)}to{opacity:1;transform:scale(1)}}
+@keyframes cIn{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+.slide.active .a1{animation:fU 0.65s ease-out 0.08s both}
+.slide.active .a2{animation:fU 0.65s ease-out 0.22s both}
+.slide.active .a3{animation:fU 0.65s ease-out 0.38s both}
+.slide.active .a4{animation:fU 0.65s ease-out 0.52s both}
+.slide.active .a5{animation:fU 0.65s ease-out 0.66s both}
+.slide.active .al{animation:fL 0.7s ease-out 0.12s both}
+.slide.active .ar{animation:fR 0.7s ease-out 0.28s both}
+.slide.active .as{animation:sI 0.7s ease-out 0.1s both}
+.slide.active .c1{animation:cIn 0.6s ease-out 0.25s both}
+.slide.active .c2{animation:cIn 0.6s ease-out 0.42s both}
+.slide.active .c3{animation:cIn 0.6s ease-out 0.58s both}
+.slide.active .c4{animation:cIn 0.6s ease-out 0.74s both}
+
+/* ─────────────── PARTICLE / LEAF ─────────────── */
+.pbox{position:absolute;top:0;left:0;width:100%;height:100%;min-height:100vh;overflow:hidden;z-index:3;pointer-events:none}
+.pt{position:absolute;border-radius:50%;animation:drift linear infinite}
+.lf{position:absolute;font-size:1.2rem;animation:leafFall linear infinite;z-index:3;pointer-events:none;opacity:.7}
+
+/* ─────────────── GRID DECO ─────────────── */
+.grid-deco{position:absolute;top:0;left:0;width:100%;height:100%;min-height:100vh;z-index:2;background-image:linear-gradient(rgba(34,197,94,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(34,197,94,.035) 1px,transparent 1px);background-size:55px 55px;pointer-events:none}
+
+/* ═══════════════════════════════
+   SLIDE WRAPPERS
+═══════════════════════════════ */
+.s-wrap{position:relative;z-index:10;display:flex;flex-direction:column;justify-content:center;min-height:100%;padding:clamp(20px,5vw,64px);padding-bottom:clamp(80px,12vh,100px) !important;}
+
+/* ═══════════════════════════════
+   SLIDE 1 – TITLE
+═══════════════════════════════ */
+/* Using Unsplash */
+.s1-bg{background-image:url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1920&q=85')}
+.s1-wrap{max-width:min(700px,100%);width:100%;}
+.s1-globe{position:absolute;right:clamp(-60px,-6vw,20px);top:50%;transform:translateY(-50%);width:clamp(220px,42vw,540px);height:clamp(220px,42vw,540px);border-radius:50%;overflow:hidden;z-index:4;box-shadow:0 0 0 2px rgba(34,197,94,.35),0 0 70px rgba(34,197,94,.4),0 0 140px rgba(14,165,233,.25);animation:beat 4s ease-in-out infinite}
+.s1-globe img{width:100%;height:100%;object-fit:cover;border-radius:50%;animation:spin 30s linear infinite}
+.s1-globe::after{content:'';position:absolute;inset:-3px;border-radius:50%;background:conic-gradient(from 0deg,transparent 0%,rgba(34,197,94,.38) 20%,transparent 40%,rgba(14,165,233,.38) 60%,transparent 80%);animation:spin 8s linear infinite}
+.s1-badge{display:inline-flex;align-items:center;gap:9px;padding:7px 16px;border-radius:100px;background:rgba(34,197,94,.14);border:1px solid rgba(134,239,172,.32);margin-bottom:clamp(12px,2.5vh,22px)}
+.s1-badge span{font-size:.72rem;font-weight:700;color:#86efac;letter-spacing:.1em;text-transform:uppercase}
+.s1-num{font-family:'Space Grotesk',sans-serif;font-size:clamp(.9rem,2.2vw,1.5rem);font-weight:700;color:rgba(255,255,255,.45);letter-spacing:.15em;text-transform:uppercase;margin-bottom:4px}
+.s1-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(3rem,8.5vw,7.5rem);font-weight:900;line-height:.92;letter-spacing:-.03em;margin-bottom:clamp(10px,2vh,18px)}
+.s1-title .l1{display:block;background:linear-gradient(135deg,#86efac 0%,#22c55e 50%,#4ade80 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200%;animation:gradS 3s ease infinite}
+.s1-title .l2{display:block;color:#fff;text-shadow:0 4px 40px rgba(0,0,0,.7)}
+.s1-sub{font-size:clamp(.86rem,1.8vw,1.1rem);color:rgba(255,255,255,.72);margin-bottom:clamp(20px,4vh,36px);letter-spacing:.02em;max-width:460px}
+.s1-div{width:52px;height:2px;background:linear-gradient(90deg,#22c55e,transparent);margin-bottom:clamp(16px,3vh,28px)}
+.s1-card{padding:clamp(18px,3vw,28px) clamp(20px,4vw,32px);max-width:480px;width:100%}
+.s1-name{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.5rem,3.8vw,2.4rem);font-weight:800;color:#fff;margin-bottom:14px;border-bottom:1px solid rgba(255,255,255,.15);padding-bottom:12px}
+.s1-info-list{display:flex;flex-direction:column;gap:10px;font-size:clamp(1.05rem,2.2vw,1.4rem);color:rgba(255,255,255,.95);font-weight:600;}
+/* corner badge */
+.corner-badge{position:absolute;top:clamp(10px,2.5vw,22px);left:clamp(10px,2.5vw,22px);z-index:15}
+.corner-icon{width:clamp(36px,6.5vw,58px);height:clamp(36px,6.5vw,58px);border-radius:12px;background:linear-gradient(135deg,#22c55e,#0ea5e9);display:flex;align-items:center;justify-content:center;font-size:clamp(1rem,2.8vw,1.8rem);box-shadow:0 4px 20px rgba(34,197,94,.45)}
+
+/* ═══════════════════════════════
+   SLIDE 2 – WHAT ARE SDGs
+═══════════════════════════════ */
+.s2-bg{background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=85')}
+.s2-wrap{width:100%;gap:clamp(10px,2vh,18px)}
+.s2-top{display:flex;flex-direction:column;gap:clamp(6px,1.5vh,12px)}
+.s2-body{display:grid;grid-template-columns:1fr 1fr;gap:clamp(10px,2.5vw,22px);flex:1}
+.sdg-all{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(3px,.8vw,8px)}
+.sdg-d{aspect-ratio:1;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:clamp(.9rem,1.6vw,1.25rem);font-weight:800;color:#fff;cursor:default;transition:transform .2s ease;user-select:none;min-height:45px;}
+.sdg-d:hover{transform:scale(1.15)}
+.sdg-d.hl{transform:scale(1.2);box-shadow:0 0 18px rgba(63,126,68,.9)!important;border:2px solid #86efac}
+.sdg-d .n{font-size:clamp(.38rem,.7vw,.58rem);font-weight:600;opacity:.88;text-align:center}
+.tl{display:flex;align-items:center;gap:clamp(8px,2vw,14px);padding:clamp(10px,2vw,18px)}
+.tl-y{font-family:'Space Grotesk',sans-serif;font-size:clamp(1rem,2vw,1.5rem);font-weight:800;color:#fbbf24}
+.tl-line{flex:1;height:3px;background:linear-gradient(90deg,#fbbf24,#22c55e);border-radius:2px}
+.s2-stats{display:flex;flex-direction:column;gap:clamp(8px,2vh,14px);justify-content:center}
+.sbox{flex:1;padding:clamp(12px,2.5vw,22px);border-radius:16px;text-align:center;display:flex;flex-direction:column;gap:4px}
+.sbox .v{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,4vw,2.8rem);font-weight:900}
+.sbox .lb{font-size:.68rem;color:rgba(255,255,255,.6)}
+.s2-un-img{width:100%;max-height:clamp(80px,15vh,140px);display:flex;align-items:center;justify-content:center;font-size:clamp(3.5rem,8vh,5rem);text-shadow:0 0 30px rgba(14,165,233,.8)}
+
+/* ═══════════════════════════════
+   SLIDE 3 – WHAT IS SDG 13
+═══════════════════════════════ */
+.s3-topbar{position:absolute;top:0;left:0;right:0;z-index:15;text-align:center;padding:clamp(12px,2.5vh,22px) clamp(16px,4vw,36px);background:rgba(4,12,28,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.1)}
+.s3-split{position:relative;z-index:10;width:100%;min-height:100%;display:grid;grid-template-columns:1fr 1fr}
+.s3-half{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(16px,4vw,52px) clamp(14px,3.5vw,44px);padding-top:clamp(90px,15vh,140px);padding-bottom:clamp(80px,12vh,100px);}
+.s3-half .bg-img{transform:none!important}
+.s3-hl{/* left side - healthy */}
+.s3-hr{/* right side - crisis */}
+.vs-cnt{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:20;display:flex;flex-direction:column;align-items:center;gap:10px}
+.vs{width:clamp(48px,7vw,72px);height:clamp(48px,7vw,72px);border-radius:50%;background:rgba(4,14,32,.88);border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:clamp(.82rem,1.6vw,1.1rem);color:#fff;backdrop-filter:blur(12px);box-shadow:0 8px 32px rgba(0,0,0,.55)}
+.vs-line{width:2px;height:60px;background:linear-gradient(to bottom,rgba(255,255,255,0),rgba(255,255,255,.28),rgba(255,255,255,0))}
+.imp-list{display:flex;flex-direction:column;gap:clamp(3px,.8vh,7px);margin-top:9px}
+.imp-item{display:flex;align-items:center;gap:8px;padding:clamp(5px,1vw,8px) clamp(8px,1.8vw,13px);background:rgba(0,0,0,.32);border-radius:9px;border-left:3px solid;font-size:clamp(.64rem,1.3vw,.84rem);color:rgba(255,255,255,.85)}
+.s3-icon{font-size:clamp(1.6rem,4vw,3rem);margin-bottom:8px;display:block}
+
+/* ═══════════════════════════════
+   SLIDE 4 – GOALS
+═══════════════════════════════ */
+.s4-bg{background-image:url('https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1920&q=85')}
+.s4-wrap{width:100%;gap:clamp(10px,2vh,18px)}
+.s4-hdr{text-align:center}
+.s4-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(9px,1.8vw,16px);flex:1}
+.s4-card{padding:clamp(14px,2.2vw,26px);position:relative;overflow:hidden;display:flex;flex-direction:column;gap:clamp(5px,1.2vh,10px);cursor:default;transition:transform .3s ease,box-shadow .3s ease;animation:glow 4.5s ease-in-out infinite}
+.s4-card:hover{transform:translateY(-5px) scale(1.015)}
+.s4-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.06) 0%,rgba(255,255,255,0) 100%);border-radius:inherit;pointer-events:none}
+.s4-num{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:900;line-height:1;color:rgba(255,255,255,.07);position:absolute;top:10px;right:14px}
+.s4-img{width:100%;height:clamp(70px,12vh,120px);object-fit:cover;border-radius:10px;margin-bottom:4px}
+.s4-icon{font-size:clamp(1.6rem,3.2vw,2.5rem)}
+.s4-ttl{font-family:'Space Grotesk',sans-serif;font-size:clamp(.88rem,1.7vw,1.15rem);font-weight:700;color:#fff;line-height:1.2}
+.s4-desc{font-size:clamp(.64rem,1.2vw,.82rem);color:rgba(255,255,255,.72);line-height:1.65;flex:1}
+.s4-bar{height:3px;border-radius:2px;background-size:200% 100%;animation:shimmer 2s linear infinite}
+.cblue{background:linear-gradient(135deg,rgba(14,165,233,.18),rgba(2,132,199,.1));border:1px solid rgba(14,165,233,.32)!important}
+.cgreen{background:linear-gradient(135deg,rgba(34,197,94,.18),rgba(22,163,74,.1));border:1px solid rgba(34,197,94,.32)!important}
+.cteal{background:linear-gradient(135deg,rgba(16,185,129,.18),rgba(5,150,105,.1));border:1px solid rgba(52,211,153,.32)!important}
+.cyellow{background:linear-gradient(135deg,rgba(251,191,36,.18),rgba(217,119,6,.1));border:1px solid rgba(251,191,36,.32)!important}
+
+/* ═══════════════════════════════
+   SLIDE 5 – MY OPINION
+═══════════════════════════════ */
+.s5-bg{background-image:url('https://images.unsplash.com/photo-1470770903676-69b98201ea1c?w=1920&q=85')}
+.s5-wrap{width:100%;display:grid;grid-template-columns:55% 45%;align-items:center;padding:0 !important;}
+.s5-left{padding:clamp(20px,5vw,72px) clamp(18px,4.5vw,60px);display:flex;flex-direction:column;justify-content:center;gap:clamp(10px,2vh,18px);padding-bottom:clamp(80px,12vh,100px);}
+.s5-right{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(14px,3.5vw,44px);gap:clamp(10px,2vh,18px)}
+.s5-qt{font-size:clamp(.8rem,1.6vw,1rem);color:rgba(255,255,255,.9);line-height:1.9;font-style:italic}
+.s5-img{width:100%;max-width:340px;height:clamp(140px,22vh,220px);object-fit:cover;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+.actions{display:flex;flex-wrap:wrap;gap:7px}
+.ac{display:flex;align-items:center;gap:5px;padding:7px 13px;border-radius:100px;background:rgba(34,197,94,.12);border:1px solid rgba(134,239,172,.25);color:rgba(255,255,255,.88);font-size:clamp(.64rem,1.2vw,.78rem);font-weight:500;transition:all .2s}
+.ac:hover{background:rgba(34,197,94,.28);transform:scale(1.06)}
+.s2x2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(7px,1.5vw,12px);width:100%;max-width:300px}
+.sm{padding:clamp(10px,1.8vw,16px);text-align:center;border-radius:14px}
+.sm .v{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.2rem,3vw,2rem);font-weight:900;display:block}
+.sm .lb{font-size:.62rem;color:rgba(255,255,255,.55)}
+
+/* ═══════════════════════════════
+   SLIDE 6 – CONCLUSION
+═══════════════════════════════ */
+.s6-bg{background-image:url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1920&q=85')}
+.s6-wrap{width:100%;align-items:center;text-align:center;gap:clamp(10px,2vh,18px)}
+.s6-earth{width:clamp(100px,15vw,170px);height:clamp(100px,15vw,170px);border-radius:50%;overflow:hidden;box-shadow:0 0 0 2px rgba(34,197,94,.35),0 0 40px rgba(34,197,94,.5),0 0 90px rgba(34,197,94,.2);animation:beat 3s ease-in-out infinite;position:relative}
+.s6-earth img{width:100%;height:100%;object-fit:cover;border-radius:50%;animation:spin 25s linear infinite}
+.s6-earth::after{content:'';position:absolute;inset:-3px;border-radius:50%;background:conic-gradient(from 0deg,transparent,rgba(34,197,94,.5),transparent,rgba(14,165,233,.5),transparent);animation:spin 5s linear infinite;pointer-events:none}
+.s6-msgs{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(7px,1.5vw,14px)}
+.s6-chip{padding:clamp(9px,1.8vw,14px) clamp(16px,3.5vw,30px);border-radius:100px;font-family:'Space Grotesk',sans-serif;font-size:clamp(.76rem,1.7vw,1rem);font-weight:700;color:#fff}
+.ty{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.2rem,6.5vw,5.5rem);font-weight:900;letter-spacing:-.02em;background:linear-gradient(135deg,#86efac,#22c55e,#4ade80,#86efac);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200%;animation:gradS 3s ease infinite}
+.ring{position:absolute;border-radius:50%;border:1px solid;top:50%;left:50%;transform:translate(-50%,-50%);z-index:0;pointer-events:none}
+.s6-bottom-imgs{display:flex;gap:clamp(6px,1.5vw,12px);justify-content:center}
+.s6-img-sm{width:clamp(55px,9vw,100px);height:clamp(38px,6vw,68px);object-fit:cover;border-radius:10px;opacity:.75;box-shadow:0 4px 16px rgba(0,0,0,.4)}
+
+/* ─────────────── NAV ─────────────── */
+#nav{position:fixed;bottom:max(16px,env(safe-area-inset-bottom,16px));left:50%;transform:translateX(-50%);z-index:9999;display:flex;align-items:center;gap:12px;width:max-content}
+.nb{width:clamp(40px,6vw,52px);height:clamp(40px,6vw,52px);border-radius:50%;border:1px solid rgba(255,255,255,.22);background:rgba(4,14,32,.7);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#fff;font-size:clamp(.9rem,2vw,1.25rem);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .25s;box-shadow:0 4px 20px rgba(0,0,0,.45);-webkit-user-select:none;user-select:none}
+.nb:hover,.nb:active{background:rgba(34,197,94,.28);border-color:rgba(134,239,172,.5)}
+.nb:active{transform:scale(.9)}
+#ctr{font-size:.78rem;font-weight:600;color:rgba(255,255,255,.72);background:rgba(4,14,32,.7);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:7px 16px;border-radius:100px;border:1px solid rgba(255,255,255,.14);letter-spacing:.04em;white-space:nowrap;min-width:64px;text-align:center}
+
+/* ─────────────── PROGRESS ─────────────── */
+#prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#22c55e,#0ea5e9,#fbbf24);transition:width .5s ease;z-index:9999;box-shadow:0 0 12px rgba(34,197,94,.65)}
+
+/* ─────────────── SLIDE DOTS ─────────────── */
+#dots{position:fixed;right:max(10px,env(safe-area-inset-right,10px));top:50%;transform:translateY(-50%);z-index:9999;display:flex;flex-direction:column;gap:7px}
+.sd{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.28);transition:all .3s;cursor:pointer}
+.sd.active{background:#22c55e;height:20px;border-radius:2.5px;box-shadow:0 0 8px #22c55e}
+
+/* ─────────────── KEY HINT ─────────────── */
+#hint{position:fixed;top:max(8px,env(safe-area-inset-top,8px));right:max(8px,env(safe-area-inset-right,8px));z-index:9999;font-size:.65rem;color:rgba(255,255,255,.38);background:rgba(4,14,32,.55);padding:5px 11px;border-radius:100px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);transition:opacity 1.2s}
+
+/* ─────────────── PHONE RESPONSIVE ─────────────── */
+@media(max-width:800px){
+  .s1-wrap, .s2-wrap, .s4-wrap, .s5-wrap, .s6-wrap { padding-bottom:120px !important; }
+}
+
+@media(max-width:700px){
+  /* Slide 1 */
+  .s1-globe{display:none}
+  .s1-wrap{align-items:flex-start;justify-content:flex-end;}
+  .s1-title{font-size:clamp(3.2rem,14vw,5.5rem)}
+  /* Slide 2 */
+  .s2-body{grid-template-columns:1fr}
+  .s2-stats{flex-direction:row;flex-wrap:wrap}
+  .s2-un-img{display:none}
+  /* Slide 3 */
+  .s3-split{grid-template-columns:1fr;min-height:auto}
+  .vs-cnt{display:none}
+  .s3-half{min-height:500px;padding-top:clamp(68px,12vh,110px)}
+  /* Slide 4 */
+  .s4-cards{grid-template-columns:1fr}
+  .s4-img{height:clamp(70px,14vh,100px)}
+  /* Slide 5 */
+  .s5-wrap{grid-template-columns:1fr}
+  .s5-right{display:none}
+  .s5-left{padding:24px 20px;padding-bottom:120px !important;}
+  /* Slide 6 */
+  .s6-bottom-imgs{display:none}
+  #dots{display:none}
+}
+@media(max-width:420px){
+  .s6-msgs{flex-direction:column;align-items:center}
+  .sdg-all{grid-template-columns:repeat(5,1fr)}
+  .h2{font-size:1.8rem;}
+}
+::-webkit-scrollbar{display:none}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+<div id="dots"></div>
+<div id="hint">← → Swipe or Tap Edges</div>
+
+<div id="pres">
+
+<!-- ╔══════════════════════════════════════════════╗
+     ║  SLIDE 1 · TITLE                            ║
+     ╚══════════════════════════════════════════════╝ -->
+<div class="slide active" id="s1">
+  <!-- Full-screen background -->
+  <div class="bg-img s1-bg"></div>
+  <div class="ov-green"></div>
+  <div class="grid-deco"></div>
+  <!-- Particles -->
+  <div class="pbox" id="p1"></div>
+  <!-- Leaves -->
+  <span class="lf" style="left:3%;animation-duration:10s;animation-delay:0s">🍃</span>
+  <span class="lf" style="left:13%;animation-duration:14s;animation-delay:2s;font-size:.9rem">🌿</span>
+  <span class="lf" style="left:22%;animation-duration:12s;animation-delay:4.5s">🍃</span>
+  <span class="lf" style="left:44%;animation-duration:11s;animation-delay:1.5s;font-size:.85rem">🌱</span>
+  <span class="lf" style="left:58%;animation-duration:13s;animation-delay:3s">🍃</span>
+
+  <!-- Animated Earth globe -->
+  <div class="s1-globe">
+    <img src="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=600&q=80" alt="Earth" loading="eager">
+  </div>
+  <!-- Ring decorations -->
+  <div style="position:absolute;right:clamp(-80px,-9vw,10px);top:50%;transform:translateY(-50%);width:clamp(310px,58vw,700px);height:clamp(310px,58vw,700px);border-radius:50%;border:1px solid rgba(34,197,94,.07);animation:spin 26s linear infinite;z-index:3;pointer-events:none"></div>
+  <div style="position:absolute;right:clamp(-50px,-5vw,30px);top:50%;transform:translateY(-50%);width:clamp(260px,49vw,590px);height:clamp(260px,49vw,590px);border-radius:50%;border:1px solid rgba(14,165,233,.09);animation:spin 18s linear infinite reverse;z-index:3;pointer-events:none"></div>
+
+  <!-- Corner badge -->
+  <div class="corner-badge a1">
+    <div class="corner-icon">🌍</div>
+  </div>
+
+  <!-- Main content -->
+  <div class="s-wrap s1-wrap">
+    <div class="s1-badge a1">
+      <div class="dot-live"></div>
+      <span>United Nations &nbsp;·&nbsp; SDG 13</span>
+    </div>
+
+    <div class="s1-num a2">Goal 13</div>
+
+    <div class="s1-title a3">
+      <span class="l1">Climate</span>
+      <span class="l2">Action</span>
+    </div>
+
+    <p class="s1-sub a4">Taking Urgent Action to Protect Our Planet</p>
+    <div class="s1-div a4"></div>
+
+    <div class="gd s1-card a5">
+      <div class="s1-name">Name: Vrishti Arora</div>
+      <div class="s1-info-list">
+        <div><span style="color:#86efac;font-weight:700">Roll No:</span> 25</div>
+        <div><span style="color:#86efac;font-weight:700">Class:</span> 6th</div>
+        <div><span style="color:#86efac;font-weight:700">Topic:</span> SDG 13 (Climate Action)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════╗
+     ║  SLIDE 2 · WHAT ARE SDGs                   ║
+     ╚══════════════════════════════════════════════╝ -->
+<div class="slide" id="s2">
+  <div class="bg-img s2-bg"></div>
+  <div class="ov-dark"></div>
+  <div class="ov-grad-b"></div>
+  <div class="grid-deco"></div>
+
+  <div class="s-wrap s2-wrap">
+    <!-- Header -->
+    <div class="s2-top">
+      <span class="tag tb a1" style="align-self:flex-start">United Nations</span>
+      <h2 class="h2 a2">What is <span class="cg">SDG?</span></h2>
+      <div class="gd a3" style="padding:clamp(11px,2.2vw,20px);max-width:680px">
+        <p class="body">The full form of SDG is <strong class="cg">Sustainable Development Goals</strong>. They are a collection of <strong class="cy">17</strong> global goals adopted by the United Nations in 2015 to build a better future for everyone by 2030.</p>
+      </div>
+    </div>
+
+    <!-- Body: dots left, stats right -->
+    <div class="s2-body">
+      <!-- 17 coloured goal dots -->
+      <div class="a4">
+        <p class="small" style="margin-bottom:8px;color:rgba(255,255,255,.5);letter-spacing:.08em;text-transform:uppercase;font-size:.62rem;">All 17 Goals — Goal 13 Highlighted ↓</p>
+        <div class="sdg-all">
+          <div class="sdg-d" style="background:#E5243B">1<div class="n">No Poverty</div></div>
+          <div class="sdg-d" style="background:#DDA63A">2<div class="n">Hunger</div></div>
+          <div class="sdg-d" style="background:#4C9F38">3<div class="n">Health</div></div>
+          <div class="sdg-d" style="background:#C5192D">4<div class="n">Education</div></div>
+          <div class="sdg-d" style="background:#FF3A21">5<div class="n">Gender</div></div>
+          <div class="sdg-d" style="background:#26BDE2">6<div class="n">Water</div></div>
+          <div class="sdg-d" style="background:#FCC30B">7<div class="n">Energy</div></div>
+          <div class="sdg-d" style="background:#A21942">8<div class="n">Growth</div></div>
+          <div class="sdg-d" style="background:#FD6925">9<div class="n">Industry</div></div>
+          <div class="sdg-d" style="background:#DD1367">10<div class="n">Equality</div></div>
+          <div class="sdg-d" style="background:#FD9D24">11<div class="n">Cities</div></div>
+          <div class="sdg-d" style="background:#BF8B2E">12<div class="n">Consume</div></div>
+          <div class="sdg-d hl" style="background:#3F7E44">13<div class="n" style="color:#86efac">Climate!</div></div>
+          <div class="sdg-d" style="background:#0A97D9">14<div class="n">Oceans</div></div>
+          <div class="sdg-d" style="background:#56C02B">15<div class="n">Land</div></div>
+          <div class="sdg-d" style="background:#00689D">16<div class="n">Peace</div></div>
+          <div class="sdg-d" style="background:#19486A">17<div class="n">Partner</div></div>
+        </div>
+        <!-- Timeline -->
+        <div class="gd tl a5" style="margin-top:clamp(10px,2vh,18px)">
+          <span class="tl-y">2015</span>
+          <div style="flex:1">
+            <div class="tl-line"></div>
+            <p style="text-align:center;font-size:.6rem;color:rgba(255,255,255,.45);margin-top:4px">17 Goals · 169 Targets · 193 Countries · Deadline 2030</p>
+          </div>
+          <span class="tl-y" style="color:#22c55e">2030</span>
+        </div>
+      </div>
+
+      <!-- Stats + UN image -->
+      <div class="s2-stats ar">
+        <div class="s2-un-img">🇺🇳</div>
+        <div class="gd sbox"><div class="v cg">17</div><div class="lb">Global Goals</div></div>
+        <div class="gd sbox"><div class="v cb">169</div><div class="lb">Specific Targets</div></div>
+        <div class="gy sbox" style="border-radius:16px"><div class="v cy">193</div><div class="lb">Countries Signed</div></div>
+        <div class="gd sbox"><div class="v" style="color:#f9a8d4">2030</div><div class="lb">Deadline Year</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════╗
+     ║  SLIDE 3 · WHAT IS SDG 13                  ║
+     ╚══════════════════════════════════════════════╝ -->
+<div class="slide" id="s3">
+  <!-- Left side: forest/healthy earth -->
+  <div class="bg-img" id="s3bg-l" style="background-image:url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=1920&q=85');position:absolute;left:0;width:50%;height:100%;object-fit:cover"></div>
+  <!-- Right side: wildfire/pollution -->
+  <div class="bg-img" id="s3bg-r" style="background-image:url('https://images.unsplash.com/photo-1580193769210-b8d1c049a7d9?w=1920&q=85');position:absolute;left:50%;right:0;width:50%;height:100%;object-fit:cover"></div>
+  <!-- Colour-tint overlays -->
+  <div class="ov-split-l"></div>
+  <div class="ov-split-r"></div>
+
+  <!-- Top header bar -->
+  <div class="s3-topbar a1">
+    <span class="tag tg" style="margin-right:10px">SDG 13</span>
+    <span class="h3" style="font-size:clamp(.95rem,2vw,1.65rem)">What is <span class="cg">SDG 13?</span></span>
+    <p class="small" style="margin-top:5px;max-width:660px;margin-inline:auto">SDG 13 is "Climate Action". It calls for urgent, decisive action to combat climate change and its devastating effects on our planet.</p>
+  </div>
+
+  <div class="s3-split">
+    <!-- Left: Healthy Earth -->
+    <div class="s3-half s3-hl al" style="background:linear-gradient(to top,rgba(4,30,12,.92) 0%,rgba(4,30,12,.6) 60%,rgba(4,30,12,.15) 100%),linear-gradient(135deg,rgba(5,40,15,.5),transparent)">
+      <div class="s3-content" style="position:relative;z-index:5">
+        <span class="s3-icon">🌱</span>
+        <h3 class="h3" style="color:#86efac;margin-bottom:7px;font-size:clamp(.95rem,2.1vw,1.5rem)">Healthy Planet</h3>
+        <p class="body" style="margin-bottom:8px;font-size:clamp(.65rem,1.3vw,.84rem);color:rgba(255,255,255,.8)">A thriving Earth with clean air, forests, and rich biodiversity.</p>
+        <div class="imp-list">
+          <div class="imp-item" style="border-left-color:#22c55e">🌳 Rich Forests &amp; Jungles</div>
+          <div class="imp-item" style="border-left-color:#0ea5e9">🐋 Diverse Marine Life</div>
+          <div class="imp-item" style="border-left-color:#86efac">🏔️ Glaciers &amp; Clean Snow</div>
+          <div class="imp-item" style="border-left-color:#fbbf24">☀️ Clean Skies &amp; Fresh Air</div>
+          <div class="imp-item" style="border-left-color:#4ade80">🦋 Thriving Wildlife &amp; Birds</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VS badge -->
+    <div class="vs-cnt">
+      <div class="vs-line"></div>
+      <div class="vs">VS</div>
+      <div style="padding:6px 10px;background:rgba(4,14,32,.88);border:1px solid rgba(255,255,255,.18);border-radius:10px;backdrop-filter:blur(12px);font-size:.62rem;font-weight:700;color:#86efac;letter-spacing:.08em;text-align:center">SDG 13<br>GOAL</div>
+      <div class="vs-line"></div>
+    </div>
+
+    <!-- Right: Climate Crisis -->
+    <div class="s3-half s3-hr ar" style="background:linear-gradient(to top,rgba(40,4,4,.92) 0%,rgba(40,4,4,.6) 60%,rgba(40,4,4,.15) 100%)">
+      <div class="s3-content" style="position:relative;z-index:5">
+        <span class="s3-icon">⚠️</span>
+        <h3 class="h3" style="color:#fca5a5;margin-bottom:7px;font-size:clamp(.95rem,2.1vw,1.5rem)">Climate Crisis</h3>
+        <p class="body" style="margin-bottom:8px;font-size:clamp(.65rem,1.3vw,.84rem);color:rgba(255,255,255,.8)">Rising temperatures and pollution are threatening life on Earth.</p>
+        <div class="imp-list">
+          <div class="imp-item" style="border-left-color:#ef4444">🌡️ Global Warming &amp; Heatwaves</div>
+          <div class="imp-item" style="border-left-color:#f97316">🔥 Wildfires &amp; Droughts</div>
+          <div class="imp-item" style="border-left-color:#fbbf24">🌊 Floods &amp; Rising Sea Levels</div>
+          <div class="imp-item" style="border-left-color:#a78bfa">🧊 Melting Glaciers &amp; Ice Caps</div>
+          <div class="imp-item" style="border-left-color:#f87171">🏭 Pollution &amp; Loss of Wildlife</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════╗
+     ║  SLIDE 4 · GOALS OF SDG 13                 ║
+     ╚══════════════════════════════════════════════╝ -->
+<div class="slide" id="s4">
+  <div class="bg-img s4-bg" style="background-image:url('https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1920&q=85')"></div>
+  <div class="ov-dark"></div>
+  <div class="ov-grad-b"></div>
+  <div class="grid-deco"></div>
+  <!-- Ambient glow -->
+  <div style="position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(34,197,94,.07),transparent 70%);top:-150px;right:-150px;z-index:2;pointer-events:none;animation:pulse 5s ease-in-out infinite"></div>
+
+  <div class="s-wrap s4-wrap">
+    <div class="s4-hdr a1">
+      <span class="tag tg" style="margin-bottom:8px;display:inline-block">Four Major Goals</span>
+      <h2 class="h2" style="margin-bottom:4px">Goals of <span class="cg">SDG 13</span></h2>
+      <p class="small" style="color:rgba(255,255,255,.62)">The four pillars of climate action for a sustainable future</p>
+    </div>
+
+    <div class="s4-cards">
+      <!-- GOAL 1 -->
+      <div class="glass cblue s4-card c1">
+        <div class="s4-num">01</div>
+        <img src="https://images.unsplash.com/photo-1603985529862-9e12198c9a60?w=600&q=80" alt="Emissions" class="s4-img">
+        <div class="s4-icon">⚡</div>
+        <h3 class="s4-ttl cb">Reduce Greenhouse Gas Emissions</h3>
+        <p class="s4-desc">Cut CO₂ and harmful gas emissions through clean technology, energy efficiency, and international climate agreements to slow global warming.</p>
+        <div class="s4-bar" style="background:linear-gradient(90deg,#0ea5e9,#38bdf8,#0ea5e9)"></div>
+      </div>
+
+      <!-- GOAL 2 -->
+      <div class="glass cgreen s4-card c2">
+        <div class="s4-num">02</div>
+        <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&q=80" alt="Solar Energy" class="s4-img">
+        <div class="s4-icon">☀️</div>
+        <h3 class="s4-ttl cg">Promote Renewable Energy</h3>
+        <p class="s4-desc">Transition from fossil fuels to solar, wind, and hydropower to power our world sustainably without harming the environment.</p>
+        <div class="s4-bar" style="background:linear-gradient(90deg,#22c55e,#86efac,#22c55e)"></div>
+      </div>
+
+      <!-- GOAL 3 -->
+      <div class="glass cteal s4-card c3">
+        <div class="s4-num">03</div>
+        <img src="https://images.unsplash.com/photo-1425913397330-cf8af2ff40a1?w=600&q=80" alt="Forest" class="s4-img">
+        <div class="s4-icon">🌳</div>
+        <h3 class="s4-ttl" style="color:#6ee7b7">Protect Forests &amp; Biodiversity</h3>
+        <p class="s4-desc">Conserve natural ecosystems, plant more trees, and protect wildlife habitats that act as Earth's natural climate regulators and carbon sinks.</p>
+        <div class="s4-bar" style="background:linear-gradient(90deg,#10b981,#6ee7b7,#10b981)"></div>
+      </div>
+
+      <!-- GOAL 4 -->
+      <div class="glass cyellow s4-card c4">
+        <div class="s4-num">04</div>
+        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80" alt="Awareness Education" class="s4-img">
+        <div class="s4-icon">📢</div>
+        <h3 class="s4-ttl cy">Raise Climate Awareness</h3>
+        <p class="s4-desc">Educate communities, governments, and youth worldwide about climate science, risks, and solutions to inspire collective action and policy change.</p>
+        <div class="s4-bar" style="background:linear-gradient(90deg,#fbbf24,#fde68a,#fbbf24)"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════╗
+     ║  SLIDE 5 · MY OPINION                      ║
+     ╚══════════════════════════════════════════════╝ -->
+<div class="slide" id="s5">
+  <div class="bg-img s5-bg" style="background-image:url('https://images.unsplash.com/photo-1470770903676-69b98201ea1c?w=1920&q=85')"></div>
+  <div class="ov-grad-l"></div>
+  <div class="ov-grad-b" style="background:linear-gradient(to top,rgba(2,8,18,.9) 0%,rgba(2,8,18,.45) 70%,rgba(2,8,18,.15) 100%)"></div>
+  <div class="grid-deco"></div>
+  <span class="lf" style="left:62%;animation-duration:10s;animation-delay:0s">🍃</span>
+  <span class="lf" style="left:74%;animation-duration:14s;animation-delay:2s">🌿</span>
+  <span class="lf" style="left:84%;animation-duration:12s;animation-delay:4s">🍃</span>
+
+  <div class="s-wrap s5-wrap">
+    <!-- Left -->
+    <div class="s5-left">
+      <span class="tag tg a1" style="align-self:flex-start">My Perspective</span>
+      <h2 class="h2 a2">My <span class="cg">Opinion</span></h2>
+
+      <div class="gd a3" style="padding:clamp(14px,2.8vw,24px);position:relative;overflow:hidden">
+        <div style="position:absolute;top:-6px;left:12px;font-size:3.5rem;color:rgba(34,197,94,.14);font-family:Georgia,serif;line-height:1">"</div>
+        <p class="s5-qt" style="padding-top:14px">I believe SDG 13 is one of the most important Sustainable Development Goals because <strong class="cg">climate change affects everyone</strong> regardless of age or country. Small actions like planting trees, saving electricity, reducing plastic use, recycling waste, and using public transport can create a <strong class="cy">big positive impact</strong>. Together, we can protect our planet for future generations.</p>
+      </div>
+
+      <div class="actions a4">
+        <div class="ac">🌳 Plant Trees</div>
+        <div class="ac">💡 Save Electricity</div>
+        <div class="ac">♻️ Recycle Waste</div>
+        <div class="ac">🚌 Public Transport</div>
+        <div class="ac">🛍️ Reduce Plastic</div>
+        <div class="ac">💧 Conserve Water</div>
+        <div class="ac">🌱 Go Green</div>
+        <div class="ac">☀️ Solar Energy</div>
+      </div>
+    </div>
+
+    <!-- Right -->
+    <div class="s5-right ar">
+      <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=700&q=80" alt="Nature" class="s5-img">
+
+      <div class="gg" style="padding:clamp(14px,2.5vw,22px);text-align:center;width:100%;max-width:310px">
+        <span style="font-size:clamp(2.5rem,5vw,4rem);display:block;margin-bottom:8px;animation:floatY 3.5s ease-in-out infinite">🌍</span>
+        <h3 class="h3" style="margin-bottom:7px;font-size:clamp(.95rem,2vw,1.4rem)">Earth in Our <span class="cg">Hands</span></h3>
+        <p class="small" style="text-align:center">Every small action creates a ripple effect that can change the world.</p>
+      </div>
+
+      <div class="s2x2">
+        <div class="gd sm"><span class="v cg">1.5°C</span><span class="lb">Critical warming limit</span></div>
+        <div class="gd sm"><span class="v cb">1M+</span><span class="lb">Species at risk</span></div>
+        <div class="gd sm"><span class="v cy">30%</span><span class="lb">Less forest cover</span></div>
+        <div class="gd sm"><span class="v" style="color:#f9a8d4">2030</span><span class="lb">Deadline to act</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════════════╗
+     ║  SLIDE 6 · CONCLUSION                      ║
+     ╚══════════════════════════════════════════════╝ -->
+<div class="slide" id="s6">
+  <div class="bg-img s6-bg" style="background-image:url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1920&q=85')"></div>
+  <div class="ov-dark"></div>
+  <div class="ov-grad-b"></div>
+  <div class="grid-deco"></div>
+  <!-- Ring decorations -->
+  <div class="ring" style="width:clamp(360px,64vw,820px);height:clamp(360px,64vw,820px);border-color:rgba(34,197,94,.06);animation:spin 34s linear infinite"></div>
+  <div class="ring" style="width:clamp(270px,49vw,620px);height:clamp(270px,49vw,620px);border-color:rgba(14,165,233,.08);animation:spin 24s linear infinite reverse"></div>
+  <!-- Leaves -->
+  <span class="lf" style="left:7%;animation-duration:11s;animation-delay:0s">🍃</span>
+  <span class="lf" style="left:17%;animation-duration:14s;animation-delay:1.5s">🌿</span>
+  <span class="lf" style="left:77%;animation-duration:12s;animation-delay:2.5s">🍃</span>
+  <span class="lf" style="left:88%;animation-duration:10s;animation-delay:3.5s">🌱</span>
+
+  <div class="s-wrap s6-wrap">
+    <!-- Animated globe -->
+    <div class="s6-earth as">
+      <img src="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=600&q=80" alt="Earth" loading="lazy">
+    </div>
+
+    <span class="tag tg a1">Conclusion</span>
+
+    <div class="gd a2" style="max-width:min(660px,90vw);padding:clamp(16px,3vw,26px)">
+      <p class="body" style="font-size:clamp(.82rem,1.7vw,1.08rem);line-height:1.9;text-align:center">
+        Climate Action is <strong class="cg">not just the responsibility of governments</strong>. Every individual has the power to make a difference. If we act today, we can build a <strong class="cb">cleaner, greener</strong> and <strong class="cy">healthier world</strong> for future generations.
+      </p>
+    </div>
+
+    <div class="s6-msgs a3">
+      <div class="gg s6-chip">🌱 Save Earth</div>
+      <div class="gb s6-chip">🌊 Save Oceans</div>
+      <div class="gy s6-chip">✨ Save Future</div>
+    </div>
+
+    <div class="ty a4">Thank You</div>
+
+    <div class="a5" style="display:flex;align-items:center;gap:10px;justify-content:center;flex-wrap:wrap">
+      <div class="gd" style="padding:8px 16px;border-radius:100px;font-size:clamp(.7rem,1.4vw,.86rem);color:rgba(255,255,255,.7)">Presented by <strong class="cg">Vrishti Arora</strong></div>
+      <div class="gd" style="padding:8px 16px;border-radius:100px;font-size:clamp(.7rem,1.4vw,.86rem);color:rgba(255,255,255,.7)">SDG 13 &nbsp;·&nbsp; Climate Action</div>
+    </div>
+
+    <!-- Bottom decorative images -->
+    <div class="s6-bottom-imgs a5">
+      <img src="https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?w=200&q=75" alt="forest" class="s6-img-sm">
+      <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=200&q=75" alt="solar" class="s6-img-sm">
+      <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=200&q=75" alt="ocean" class="s6-img-sm">
+      <img src="https://images.unsplash.com/photo-1490682143684-14369e18dce8?w=200&q=75" alt="mountains" class="s6-img-sm">
+    </div>
+  </div>
+</div>
+
+</div><!-- #pres -->
+
+<!-- ─── NAV ─── -->
+<div id="nav">
+  <button class="nb" id="prev-btn" onclick="nav(-1)" aria-label="Previous slide">&#8592;</button>
+  <span id="ctr">1 / 6</span>
+  <button class="nb" id="next-btn" onclick="nav(1)" aria-label="Next slide">&#8594;</button>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const N = slides.length;
+  let cur = 0, busy = false;
+
+  /* Build dots */
+  const dotsEl = document.getElementById('dots');
+  slides.forEach((_,i)=>{
+    const d = document.createElement('div');
+    d.className = 'sd'+(i===0?' active':'');
+    d.setAttribute('role','button');
+    d.setAttribute('aria-label','Slide '+(i+1));
+    d.onclick = ()=>go(i);
+    dotsEl.appendChild(d);
+  });
+
+  function ui(){
+    document.getElementById('ctr').textContent = (cur+1)+' / '+N;
+    document.getElementById('prog').style.width = ((cur+1)/N*100)+'%';
+    document.querySelectorAll('.sd').forEach((d,i)=>d.classList.toggle('active',i===cur));
+  }
+
+  function go(idx){
+    if(busy||idx===cur||idx<0||idx>=N) return;
+    busy = true;
+    const prev = cur;
+    cur = idx;
+    
+    slides[prev].classList.remove('active');
+    slides[prev].classList.add('prev');
+    setTimeout(()=>slides[prev].classList.remove('prev'), 760);
+    
+    // Add active class and reset animations
+    slides[cur].classList.add('active');
+    const animElements = slides[cur].querySelectorAll('.a1,.a2,.a3,.a4,.a5,.al,.ar,.as,.c1,.c2,.c3,.c4');
+    animElements.forEach(el => {
+      el.style.animation = 'none';
+      el.offsetHeight; // trigger reflow
+      el.style.animation = null;
+    });
+
+    ui();
+    setTimeout(()=>{ busy=false; }, 800);
+  }
+
+  window.nav = function(d){ go(cur+d); };
+
+  /* Keyboard */
+  document.addEventListener('keydown', e=>{
+    if([' ','ArrowRight','ArrowDown'].includes(e.key)){ e.preventDefault(); nav(1); }
+    else if(['ArrowLeft','ArrowUp'].includes(e.key)){ e.preventDefault(); nav(-1); }
+  });
+
+  /* Touch swipe */
+  let tx=0, ty=0, ttime=0;
+  document.addEventListener('touchstart', e=>{
+    tx = e.touches[0].clientX;
+    ty = e.touches[0].clientY;
+    ttime = Date.now();
+  },{passive:true});
+  document.addEventListener('touchend', e=>{
+    const dx = e.changedTouches[0].clientX - tx;
+    const dy = e.changedTouches[0].clientY - ty;
+    const dt = Date.now() - ttime;
+    if(dt < 400 && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 44){
+      nav(dx < 0 ? 1 : -1);
+    }
+  },{passive:true});
+
+  /* Tap left/right edges */
+  document.getElementById('pres').addEventListener('click', e=>{
+    if(e.target.closest('#nav') || e.target.closest('button')) return;
+    const x = e.clientX / window.innerWidth;
+    if(x < 0.15) nav(-1);
+    else if(x > 0.85) nav(1);
+  });
+
+  /* Particles */
+  (function mkPts(){
+    const el = document.getElementById('p1');
+    if(!el) return;
+    const colors = ['rgba(134,239,172,.5)','rgba(125,211,252,.4)','rgba(255,255,255,.22)','rgba(251,191,36,.3)'];
+    for(let i=0;i<25;i++){
+      const p = document.createElement('div');
+      p.className = 'pt';
+      const s = Math.random()*5+2;
+      p.style.cssText = 'width:'+s+'px;height:'+s+'px;left:'+Math.random()*100+'%;bottom:'+Math.random()*12+'%;'
+        +'background:'+colors[Math.floor(Math.random()*colors.length)]+';'
+        +'--dx:'+(Math.random()-.5)*160+'px;'
+        +'animation-duration:'+(Math.random()*7+6)+'s;'
+        +'animation-delay:'+(Math.random()*7)+'s;'
+        +'opacity:'+(Math.random()*.35+.12)+';';
+      el.appendChild(p);
+    }
+  })();
+
+  /* Hide hint */
+  setTimeout(()=>{
+    const h = document.getElementById('hint');
+    if(h) h.style.opacity = '0';
+  }, 4000);
+
+  ui();
+})();
+</script>
+</body>
+</html>
